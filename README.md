@@ -1,4 +1,4 @@
-# Smart To-Do List
+# Smart To-Do List And Task Management System
 
 ## PBL Project – Phase I
 
