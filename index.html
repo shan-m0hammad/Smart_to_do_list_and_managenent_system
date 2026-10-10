@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <!-- Mobile responsive banane ke liye -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Smart To-Do List | DSA PBL</title>
+
+    <!-- CSS file connect -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ================= HEADER ================= -->
+    <header class="topbar">
+
+        <!-- Website name and project information -->
+        <div class="brand">
+
+            <div class="brand-mark">✓</div>
+
+            <div>
+                <h1>Smart To-Do</h1>
+                <p>Task Management System • C / C++ • DSA PBL</p>
+            </div>
+
+        </div>
+
+        <!-- Project status -->
+        <div class="status">
+            <span></span>
+            Local Project
+        </div>
+
+    </header>
+
+
+    <!-- ================= MAIN CONTENT ================= -->
+    <main>
+
+        <!-- ================= HERO SECTION ================= -->
+        <section class="hero">
+
+            <div>
+
+                <div class="eyebrow">
+                    SMART TASK MANAGEMENT SYSTEM
+                </div>
+
+                <h2>
+                    Plan. Prioritize.<br>
+                    <b>Get it done.</b>
+                </h2>
+
+                <p>
+                    A simple task manager designed around the PBL
+                    requirements: task operations, searching, sorting,
+                    priority handling, undo, queues and file storage.
+                </p>
+
+            </div>
+
+            <!-- DSA information -->
+            <div class="hero-dsa">
+                <strong>DSA</strong>
+                <small>Built around C/C++ concepts</small>
+            </div>
+
+        </section>
+
+
+        <!-- ================= TASK STATISTICS ================= -->
+        <section class="stats">
+
+            <!-- Total tasks -->
+            <div class="stat">
+                <div class="icon blue">◈</div>
+
+                <div>
+                    <strong id="totalTasks">0</strong>
+                    <small>Total Tasks</small>
+                </div>
+            </div>
+
+
+            <!-- Pending tasks -->
+            <div class="stat">
+                <div class="icon orange">◷</div>
+
+                <div>
+                    <strong id="pendingTasks">0</strong>
+                    <small>Pending</small>
+                </div>
+            </div>
+
+
+            <!-- Completed tasks -->
+            <div class="stat">
+                <div class="icon green">✓</div>
+
+                <div>
+                    <strong id="completedTasks">0</strong>
+                    <small>Completed</small>
+                </div>
+            </div>
+
+
+            <!-- High priority tasks -->
+            <div class="stat">
+                <div class="icon red">!</div>
+
+                <div>
+                    <strong id="highTasks">0</strong>
+                    <small>High Priority</small>
+                </div>
+            </div>
+
+        </section>
+
+
+        <!-- ================= ADD TASK SECTION ================= -->
+        <section class="panel">
+
+            <div class="panel-head">
+
+                <div>
+
+                    <div class="eyebrow">
+                        CREATE
+                    </div>
+
+                    <h2 id="formHeading">
+                        Add a new task
+                    </h2>
+
+                    <p>
+                        Task ID is generated automatically.
+                        Add the details used in the project proposal.
+                    </p>
+
+                   <p>
+    (Marked with " <b style="color: red !important;">*</b> " need to fill)
+</p>
+
+                </div>
+
+                <div class="plus">+</div>
+
+            </div>
+
+
+            <!-- Task input fields -->
+            <div class="form-grid">
+
+                <!-- Task title -->
+                <label>
+                    <span>Task title <b style="color: red !important;">*</b></span>
+                    <input
+                        id="taskTitle"
+                        placeholder="e.g. Complete DSA assignment"
+                    >
+                </label>
+
+
+                <!-- Task category -->
+                <label>
+                    <span>Category <b style="color: red !important;">*</b></span>
+                    <input
+                        id="taskCategory"
+                        placeholder="College / PBL / Personal"
+                    >
+                </label>
+
+
+                <!-- Deadline -->
+                <label>
+                    <span>Deadline <b style="color: red !important;">*</b></span>
+                    <input type="date" id="taskDeadline" min="">
+                </label>
+
+
+                <!-- Priority -->
+                <label>
+                    <span>Priority <b style="color: red !important;">*</b></span>
+
+                    <select id="taskPriority">
+
+                        <option value="3">
+                            High
+                        </option>
+
+                        <option value="2" selected>
+                            Medium
+                        </option>
+
+                        <option value="1">
+                            Low
+                        </option>
+
+                    </select>
+                </label>
+
+            </div>
+
+
+            <!-- Optional task description -->
+            <label class="description">
+
+                <span>
+                    Description (Optional)
+                </span>
+
+                <textarea
+                    id="taskDescription"
+                    placeholder="Short description of the task"
+                ></textarea>
+
+            </label>
+
+
+            <!-- Add and Clear buttons -->
+            <div class="form-actions">
+
+                <button
+                    class="primary"
+                    id="saveTask"
+                >
+                    + Add Task
+                </button>
+
+                <button
+                    class="secondary"
+                    id="clearForm"
+                >
+                    Clear
+                </button>
+
+            </div>
+
+
+            <!-- Success / error message -->
+            <div
+                id="message"
+                class="message"
+            ></div>
+
+        </section>
+
+
+        <!-- ================= SEARCH AND TOOLS ================= -->
+        <section class="toolbar">
+
+            <!-- Search box -->
+            <div class="search">
+
+                <span>⌕</span>
+
+                <input
+                    id="search"
+                    placeholder="Search by title, category or description..."
+                >
+
+            </div>
+
+
+            <!-- Sorting options -->
+            <select id="sortOption">
+
+                <option value="new">
+                    Newest
+                </option>
+
+                <option value="priority">
+                    Priority: High → Low
+                </option>
+
+                <option value="deadline">
+                    Deadline
+                </option>
+
+                <option value="title">
+                    Title A → Z
+                </option>
+
+            </select>
+
+
+            <!-- Undo -->
+            <button
+                class="tool"
+                id="undoBtn"
+            >
+                ↶ Undo
+            </button>
+
+
+            <!-- Queue processing -->
+            <button
+                class="tool"
+                id="queueBtn"
+            >
+                FIFO Process
+            </button>
+
+
+            <!-- Priority Queue processing -->
+            <button
+                class="tool"
+                id="priorityBtn"
+            >
+                Priority Process
+            </button>
+
+        </section>
+
+
+        <!-- ================= TASK LISTS ================= -->
+        <section class="workspace">
+
+
+            <!-- Pending tasks -->
+            <div class="panel task-panel">
+
+                <div class="section-head">
+
+                    <div>
+
+                        <div class="eyebrow">
+                            TASK LIST
+                        </div>
+
+                        <h2>
+                            Pending Tasks
+                            <span id="pendingLabel">0</span>
+                        </h2>
+
+                    </div>
+
+                    <!-- DSA concept used -->
+                    <span class="pill">
+                        Linked List
+                    </span>
+
+                </div>
+
+
+                <!-- JavaScript tasks ko yaha show karega -->
+                <div id="pendingList"></div>
+
+            </div>
+
+
+            <!-- Completed tasks -->
+            <div class="panel task-panel">
+
+                <div class="section-head">
+
+                    <div>
+
+                        <div class="eyebrow">
+                            DONE
+                        </div>
+
+                        <h2>
+                            Completed
+                            <span id="doneLabel">0</span>
+                        </h2>
+
+                    </div>
+
+                    <span class="pill green-pill">
+                        Completed
+                    </span>
+
+                </div>
+
+
+                <!-- Completed tasks yaha show honge -->
+                <div id="completedList"></div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= DSA SECTION ================= -->
+        <section class="panel dsa-panel">
+
+            <div class="section-head">
+
+                <div>
+
+                    <div class="eyebrow">
+                        PBL / VIVA
+                    </div>
+
+                    <h2>
+                        Where C & C++ / DSA are used
+                    </h2>
+
+                </div>
+
+                <span class="pill">
+                    Easy to explain
+                </span>
+
+            </div>
+
+
+            <div class="dsa-grid">
+
+                <!-- Linked List -->
+                <article>
+                    <b>01</b>
+
+                    <h3>Linked List</h3>
+
+                    <p>
+                        Flexible task storage with insertion and deletion.
+                    </p>
+
+                    <code>list&lt;Task&gt;</code>
+                </article>
+
+
+                <!-- Stack -->
+                <article>
+                    <b>02</b>
+
+                    <h3>Stack</h3>
+
+                    <p>
+                        Stores previous states for the Undo operation.
+                    </p>
+
+                    <code>stack&lt;vector&lt;Task&gt;&gt;</code>
+                </article>
+
+
+                <!-- Queue -->
+                <article>
+                    <b>03</b>
+
+                    <h3>Queue</h3>
+
+                    <p>
+                        Processes pending tasks in FIFO order.
+                    </p>
+
+                    <code>queue&lt;int&gt;</code>
+                </article>
+
+
+                <!-- Priority Queue -->
+                <article>
+                    <b>04</b>
+
+                    <h3>Priority Queue</h3>
+
+                    <p>
+                        Processes high-priority tasks first.
+                    </p>
+
+                    <code>priority_queue</code>
+                </article>
+
+
+                <!-- Searching -->
+                <article>
+                    <b>05</b>
+
+                    <h3>Searching</h3>
+
+                    <p>
+                        Finds tasks using title, category or description.
+                    </p>
+
+                    <code>linear search</code>
+                </article>
+
+
+                <!-- Sorting -->
+                <article>
+                    <b>06</b>
+
+                    <h3>Sorting</h3>
+
+                    <p>
+                        Orders tasks by priority, deadline or title.
+                    </p>
+
+                    <code>sort()</code>
+                </article>
+
+
+                <!-- Map -->
+                <article>
+                    <b>07</b>
+
+                    <h3>Map / Lookup</h3>
+
+                    <p>
+                        Maintains ID-based task lookup.
+                    </p>
+
+                    <code>map&lt;int, Task&gt;</code>
+                </article>
+
+
+                <!-- File Handling -->
+                <article>
+                    <b>08</b>
+
+                    <h3>File Handling</h3>
+
+                    <p>
+                        Saves task records so data can persist.
+                    </p>
+
+                    <code>fstream</code>
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= PROJECT WORKFLOW ================= -->
+        <section class="panel architecture">
+
+            <div class="section-head">
+
+                <div>
+
+                    <div class="eyebrow">
+                        SYSTEM WORKFLOW
+                    </div>
+
+                    <h2>
+                        How the project works
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <!-- Step-by-step project flow -->
+            <div class="flow">
+
+
+                <!-- Step 1 -->
+                <div>
+                    <b>1</b>
+                    <span>User Input</span>
+                    <small>Task details</small>
+                </div>
+
+
+                <i>→</i>
+
+
+                <!-- Step 2 -->
+                <div>
+                    <b>2</b>
+                    <span>Processing</span>
+                    <small>Search / Sort / DSA</small>
+                </div>
+
+
+                <i>→</i>
+
+
+                <!-- Step 3 -->
+                <div>
+                    <b>3</b>
+                    <span>Core Logic</span>
+                    <small>Task Manager</small>
+                </div>
+
+
+                <i>→</i>
+
+
+                <!-- Step 4 -->
+                <div>
+                    <b>4</b>
+                    <span>Storage</span>
+                    <small>File handling</small>
+                </div>
+
+
+                <i>→</i>
+
+
+                <!-- Step 5 -->
+                <div>
+                    <b>5</b>
+                    <span>Output</span>
+                    <small>Organized tasks</small>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- ================= FOOTER ================= -->
+    <footer>
+        Smart To-Do List & Task Management System
+        • PBL Phase II
+        • Team DSCPP-III-2026-T302
+    </footer>
+
+
+    <!-- JavaScript file -->
+    <script src="app.js"></script>
+
+</body>
+</html>
