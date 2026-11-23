@@ -287,6 +287,16 @@ function taskHtml(t){
                 </span>
 
                 ${
+                    t.reminder                      // show the due time badge only if a time is set
+                    ?
+                    `<span class="badge badge-date">
+                        ⏰ ${prettyTime(t.reminder)}
+                     </span>`
+                    :
+                    ""
+                }
+
+                ${
                     t.category                      // show category badge only if a category is set
                     ?
                     `<span class="badge badge-date">
@@ -1456,6 +1466,12 @@ function openEditModal(id){
         t.category;
 
 
+    // Fill the optional due time ("HH:MM" is stored in the reminder field)
+    $("taskTime")
+        .value =
+        t.reminder || "";
+
+
 
 
     // Show the modal
@@ -1706,7 +1722,7 @@ $("taskForm")
                     .value
                     .trim(),
 
-                reminder: ""                    // reminder not used currently
+                reminder: $("taskTime").value   // due time "HH:MM" (empty = no time)
 
             };
 
@@ -2214,6 +2230,25 @@ originalSubmitHandler.addEventListener("submit", e => {
         setDateMinimum();                // re-apply the minimum date
         showDateError("Please choose today or a future date. Past dates are not permitted.");
         $("taskDate").focus();           // move the cursor to the date field
+        return;
+    }
+
+    // Time check: a time that has already passed today cannot be saved (unless it was not changed while editing)
+    const timeValue = $("taskTime").value;
+    const editingId = Number($("editId").value);
+    const existing = editingId ? tasks.find(x => x.id === editingId) : null;
+    const unchanged = existing && existing.dueDate === dateValue && (existing.reminder || "") === timeValue;
+    if (!unchanged && timeValue && dateValue === today() && timeValue < nowHM()) {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        showDateError("That time has already passed today. Choose a later time.");
+        $("taskTime").focus();
+        return;
+    }
+
+    // First time a task gets a due time: ask the browser for notification permission
+    if (timeValue && "Notification" in window && Notification.permission === "default") {
+        Notification.requestPermission().then(updateNotifyBtn);
     }
 }, true);
 
@@ -2226,3 +2261,95 @@ setDateMinimum();
 
 // Draw the whole UI for the first time
 render();
+
+
+/* ===== Task time notifications ===== */
+// Key that remembers which task reminders were already shown (so a page refresh does not repeat them)
+const NOTIFIED_KEY = "smartTaskNotifiedV1";
+let notified = new Set();
+try { notified = new Set(JSON.parse(localStorage.getItem(NOTIFIED_KEY) || "[]")); } catch (err) {}
+
+// Current time as "HH:MM" (24-hour), same format as <input type="time">
+function nowHM() {
+    const d = new Date();
+    return String(d.getHours()).padStart(2, "0") + ":" + String(d.getMinutes()).padStart(2, "0");
+}
+
+// Converts "17:30" into "5:30 PM"
+function prettyTime(hm) {
+    const [h, m] = String(hm).split(":").map(Number);
+    return (h % 12 || 12) + ":" + String(m).padStart(2, "0") + " " + (h >= 12 ? "PM" : "AM");
+}
+
+// Short beep so the user notices the reminder (browsers may block it until the page was clicked once)
+function playBeep() {
+    try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.frequency.value = 880;
+        gain.gain.value = 0.15;
+        osc.start();
+        osc.stop(ctx.currentTime + 0.4);
+    } catch (err) {}
+}
+
+// Shows the reminder in the app (toast + beep) and as a browser notification if allowed
+function fireTaskNotification(t) {
+    showToast("⏰ " + t.title + " is due now (" + prettyTime(t.reminder) + ")");
+    playBeep();
+    if ("Notification" in window && Notification.permission === "granted") {
+        try {
+            new Notification("SmartTask reminder", {
+                body: t.title + " — due at " + prettyTime(t.reminder),
+                tag: "smarttask-" + t.id
+            });
+        } catch (err) {}
+    }
+}
+
+// Runs every few seconds: notifies for pending tasks whose due date is today and due time has arrived
+function checkDueNotifications() {
+    if (!remindersEnabled) return;          // respects the "Daily reminders" switch in Settings
+    const hm = nowHM();
+    let changed = false;
+    tasks.forEach(t => {
+        if (t.completed || !t.reminder || t.dueDate !== today()) return;
+        if (t.reminder > hm) return;        // time not reached yet
+        const key = t.id + "|" + t.dueDate + "|" + t.reminder;
+        if (notified.has(key)) return;      // already notified
+        notified.add(key);
+        changed = true;
+        fireTaskNotification(t);
+    });
+    if (changed) {
+        try { localStorage.setItem(NOTIFIED_KEY, JSON.stringify([...notified].slice(-200))); } catch (err) {}
+    }
+}
+
+// Updates the Enable button in Settings according to the browser permission
+function updateNotifyBtn() {
+    const btn = $("notifyBtn");
+    if (!btn) return;
+    if (!("Notification" in window)) { btn.textContent = "Not supported"; btn.disabled = true; return; }
+    const p = Notification.permission;
+    btn.textContent = p === "granted" ? "Enabled ✓" : p === "denied" ? "Blocked in browser" : "Enable";
+    btn.disabled = p !== "default";
+}
+
+$("notifyBtn").addEventListener("click", () => {
+    Notification.requestPermission().then(p => {
+        updateNotifyBtn();
+        if (p === "granted") {
+            showToast("Notifications enabled ✓");
+            try { new Notification("SmartTask", { body: "You will be notified when a task's time arrives." }); } catch (err) {}
+        }
+    });
+});
+
+updateNotifyBtn();
+setInterval(checkDueNotifications, 15000);          // check every 15 seconds
+document.addEventListener("visibilitychange", () => { if (!document.hidden) checkDueNotifications(); });
+setTimeout(checkDueNotifications, 3000);            // first check shortly after load
