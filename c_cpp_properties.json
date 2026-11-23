@@ -4,7 +4,7 @@
   "configurations": [
     {
       // Name of this configuration.
-      // It indicates Windows GCC compiler with 32-bit x86 IntelliSense mode.
+      // It indicates Windows GCC compiler with 32-bit x86 IntelliSense  mode.
       "name": "windows-gcc-x86",
 
       // Specifies directories where IntelliSense searches for header files.
