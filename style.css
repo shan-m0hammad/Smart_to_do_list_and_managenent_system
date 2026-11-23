@@ -23,22 +23,22 @@
 
 /* ---------- Dark theme (script.js sets data-theme="dark" on <html>) ---------- */
 html[data-theme="dark"]{
-    --bg:#0f172a;
-    --card:#1e293b;
-    --text:#e5e7eb;
-    --muted:#94a3b8;
-    --border:#334155;
-    --primary:#3b82f6;
-    --primary-dark:#2563eb;
+    --bg:#0d0d10;
+    --card:#17171c;
+    --text:#ececf1;
+    --muted:#9a9aa8;
+    --border:#2b2b33;
+    --primary:#7c6cf0;
+    --primary-dark:#6a59e3;
     --green:#4ade80;
-    --green-bg:#14532d;
+    --green-bg:#12301f;
     --red:#f87171;
-    --red-bg:#7f1d1d;
+    --red-bg:#3a1618;
     --yellow:#fbbf24;
-    --yellow-bg:#78350f;
-    --blue-bg:#1e3a8a;
-    --soft:#273449;
-    --shadow:0 8px 30px rgba(0,0,0,.35);
+    --yellow-bg:#3a2a0c;
+    --blue-bg:#2a2550;
+    --soft:#22222a;
+    --shadow:0 8px 30px rgba(0,0,0,.55);
 }
 
 /* ---------- Base ---------- */
@@ -468,7 +468,7 @@ select:focus,input:focus,textarea:focus{outline:2px solid var(--primary);outline
     transform:translate(-50%,20px);
     display:flex;align-items:center;gap:14px;
     padding:12px 18px;border-radius:12px;
-    background:#111827;color:#fff;
+    background:#18181b;color:#fff;
     box-shadow:0 10px 30px rgba(0,0,0,.35);
     opacity:0;pointer-events:none;
     transition:opacity .25s,transform .25s;
@@ -493,3 +493,126 @@ select:focus,input:focus,textarea:focus{outline:2px solid var(--primary);outline
     .day-task-count{display:none}
     .greeting h1{font-size:22px}
 }
+
+
+/* =====================================================
+   ANIMATIONS
+   ===================================================== */
+
+/* ---------- Keyframes ---------- */
+@keyframes fadeUp   {from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes taskIn   {from{opacity:0;transform:translateX(-10px)}to{opacity:1;transform:none}}
+@keyframes backdropIn{from{opacity:0}to{opacity:1}}
+@keyframes modalIn  {from{opacity:0;transform:translateY(18px) scale(.94)}to{opacity:1;transform:none}}
+@keyframes authIn   {from{opacity:0;transform:translateY(24px) scale(.92)}to{opacity:1;transform:none}}
+@keyframes popCheck {0%{transform:scale(.6)}60%{transform:scale(1.25)}100%{transform:scale(1)}}
+@keyframes flashDone{from{background:var(--green-bg)}to{background:var(--card)}}
+@keyframes pulseBadge{0%,100%{transform:scale(1)}50%{transform:scale(1.2)}}
+@keyframes glow     {0%,100%{box-shadow:0 0 0 0 rgba(217,119,6,.35)}50%{box-shadow:0 0 0 8px rgba(217,119,6,0)}}
+@keyframes floatY   {0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@keyframes gradientShift{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+
+/* ---------- Progress ring fills smoothly ---------- */
+@property --progress{syntax:"<percentage>";inherits:false;initial-value:0%}
+.progress-circle{transition:--progress .9s cubic-bezier(.4,0,.2,1)}
+
+/* ---------- Page entrance: cards and stat boxes slide up one after another ---------- */
+.page.active .card{animation:fadeUp .45s ease backwards}
+.page.active .card + .card{animation-delay:.1s}
+.page.active .layout > div:nth-child(2) .card{animation-delay:.12s}
+
+.page.active .stat,
+.page.active .progress-stat{animation:fadeUp .5s ease backwards}
+.page.active .stat:nth-child(1),.page.active .progress-stat:nth-child(1){animation-delay:.05s}
+.page.active .stat:nth-child(2),.page.active .progress-stat:nth-child(2){animation-delay:.10s}
+.page.active .stat:nth-child(3),.page.active .progress-stat:nth-child(3){animation-delay:.15s}
+.page.active .stat:nth-child(4),.page.active .progress-stat:nth-child(4){animation-delay:.20s}
+.page.active .stat:nth-child(5){animation-delay:.25s}
+
+/* quote banner: slides in, then its gradient keeps drifting slowly */
+.quote-banner{background-size:200% 200%}
+.page.active .quote-banner{animation:fadeUp .5s ease backwards,gradientShift 14s ease-in-out infinite}
+
+/* ---------- Task rows slide in (class "animating" is added by script.js for a moment after a page change) ---------- */
+.animating .task{animation:taskIn .35s ease backwards}
+.animating .task:nth-child(1){animation-delay:0s}
+.animating .task:nth-child(2){animation-delay:.05s}
+.animating .task:nth-child(3){animation-delay:.10s}
+.animating .task:nth-child(4){animation-delay:.15s}
+.animating .task:nth-child(5){animation-delay:.20s}
+.animating .task:nth-child(6){animation-delay:.25s}
+.animating .task:nth-child(7){animation-delay:.30s}
+.animating .task:nth-child(n+8){animation-delay:.35s}
+.animating .focus-item,.animating .pending-item{animation:taskIn .35s ease backwards}
+.animating .day{animation:fadeUp .35s ease backwards}
+
+/* completing a task: tick pops and the row flashes green */
+.check.pop{animation:popCheck .4s ease}
+.task.flash{animation:flashDone .8s ease}
+
+/* ---------- Hover / press feedback ---------- */
+.nav button{transition:background .15s,color .15s,transform .15s}
+.nav button:hover{transform:translateX(4px)}
+
+.logo-icon{transition:transform .35s cubic-bezier(.3,1.6,.5,1)}
+.logo:hover .logo-icon{transform:rotate(-10deg) scale(1.1)}
+
+.icon-btn{transition:background .15s,transform .15s}
+.icon-btn:hover{transform:translateY(-2px)}
+.icon-btn:active,.secondary-btn:active,.filter-btn:active{transform:scale(.94)}
+
+.secondary-btn{transition:background .15s,transform .1s}
+.primary-btn{box-shadow:0 4px 14px rgba(37,99,235,.25);transition:background .15s,transform .15s,box-shadow .15s}
+html[data-theme="dark"] .primary-btn{box-shadow:0 4px 14px rgba(124,108,240,.3)}
+.primary-btn:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(37,99,235,.3)}
+html[data-theme="dark"] .primary-btn:hover{box-shadow:0 8px 20px rgba(124,108,240,.4)}
+
+.filter-btn{transition:background .15s,color .15s,transform .1s}
+
+.stat-button{transition:transform .2s,border-color .2s,box-shadow .2s}
+.stat-button:hover{box-shadow:0 12px 30px rgba(37,99,235,.15)}
+.stat-icon{transition:transform .25s}
+.stat-button:hover .stat-icon{transform:rotate(-8deg) scale(1.12)}
+
+.task{transition:transform .2s,border-color .2s,box-shadow .2s}
+.task:hover{transform:translateX(3px)}
+.check{transition:transform .15s,background .2s,border-color .2s}
+.check:hover{transform:scale(1.15)}
+
+.day{transition:transform .15s,border-color .15s,background .15s}
+.day:not(.other):hover{transform:translateY(-2px)}
+
+.quote-refresh{transition:transform .4s,background .15s}
+.quote-refresh:hover{transform:rotate(180deg)}
+
+.theme-toggle #themeIcon{display:inline-block;transition:transform .4s}
+.theme-toggle:hover #themeIcon{transform:rotate(40deg) scale(1.15)}
+
+.toggle,.toggle span{transition:background .25s,left .25s cubic-bezier(.3,1.4,.5,1)}
+html[data-theme="dark"] .toggle{background:#3f3f46}
+html[data-theme="dark"] .toggle.on{background:var(--primary)}
+
+/* ---------- Attention animations ---------- */
+.notification-count.has-count{animation:pulseBadge 1.8s ease-in-out infinite}
+.due-alert{animation:glow 2.2s ease-in-out infinite}
+.empty-icon{display:inline-block;animation:floatY 3s ease-in-out infinite}
+
+/* ---------- Modals, login card and toast ---------- */
+.modal-backdrop.show{animation:backdropIn .2s ease}
+.modal-backdrop.show .modal{animation:modalIn .3s cubic-bezier(.2,.9,.3,1.15)}
+#authOverlay{animation:backdropIn .3s ease}
+.auth-card{animation:authIn .45s cubic-bezier(.2,.9,.3,1.1)}
+
+/* ---------- Smooth light/dark switch (class is added by script.js for 0.45s) ---------- */
+html.theme-anim *{
+    transition:background-color .4s ease,color .4s ease,border-color .4s ease,box-shadow .4s ease !important;
+}
+
+/* ---------- Respect users who turned animations off in their system ---------- */
+@media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation:none !important;transition:none !important}
+}
+
+/* ---------- Remove the last blue tints in dark mode ---------- */
+html[data-theme="dark"] .stat-button:hover{box-shadow:0 12px 30px rgba(124,108,240,.2)}
+html[data-theme="dark"] #authOverlay{background:rgba(8,8,10,.8)}
