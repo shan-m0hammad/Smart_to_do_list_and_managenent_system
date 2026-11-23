@@ -1,21 +1,51 @@
+
 {
+  // Version of the VS Code debugger configuration format.
   "version": "0.2.0",
+
+  // Contains all available debugging configurations.
   "configurations": [
     {
+      // Name displayed in the VS Code Run and Debug menu.
       "name": "C/C++ Runner: Debug Session",
+
+      // Specifies the C/C++ debugger extension.
       "type": "cppdbg",
+
+      // Launches a new program for debugging.
       "request": "launch",
+
+      // Additional command-line arguments passed to the program.
       "args": [],
+
+      // Program does not pause automatically at the entry point.
       "stopAtEntry": false,
+
+      // Runs the program in a separate external console window.
       "externalConsole": true,
+
+      // Sets the working directory of the program.
       "cwd": "c:/Users/suhai/Desktop/PBLNEW/smarttask_work/dsa/c",
+
+      // Specifies the executable file that will be debugged.
       "program": "c:/Users/suhai/Desktop/PBLNEW/smarttask_work/dsa/c/build/Debug/outDebug",
+
+      // Specifies GDB as the debugging interface.
       "MIMode": "gdb",
+
+      // Specifies the path of the GDB debugger.
       "miDebuggerPath": "gdb",
+
+      // Contains additional commands executed when GDB starts.
       "setupCommands": [
         {
+          // Enables pretty-printing of complex data structures.
           "description": "Enable pretty-printing for gdb",
+
+          // Sends the pretty-printing command to GDB.
           "text": "-enable-pretty-printing",
+
+          // Continues debugging even if this command fails.
           "ignoreFailures": true
         }
       ]
