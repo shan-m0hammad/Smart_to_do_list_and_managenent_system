@@ -1109,11 +1109,8 @@ function renderCalendar(){
 
         cells.push(
             `
-            <div
-                class="day
-                ${ds===today()?"today":""}                       <!-- highlight today -->
-                ${ds===selectedCalendarDate?"selected":""}"     <!-- highlight selected date -->
-                onclick="selectCalendarDate('${ds}')">          <!-- clicking selects this date -->
+            <div class="day ${ds===today()?"today":""} ${ds===selectedCalendarDate?"selected":""}"
+                 onclick="selectCalendarDate('${ds}')">
 
                 <div class="day-number">
                     ${d}
@@ -1777,8 +1774,7 @@ $("taskForm")
 
 
 // "Add Task" button opens the add modal
-$("addTaskBtn").onclick =
-    openAddModal;
+$("addTaskBtn").onclick = () => openAddModal();
 
 
 // The X button closes the modal
@@ -1888,9 +1884,7 @@ $("prevMonth").onclick =
     () => {
 
         // Move the displayed month back by one
-        calendarDate.setMonth(
-            calendarDate.getMonth()-1
-        );
+        calendarDate = new Date(calendarDate.getFullYear(), calendarDate.getMonth()-1, 1);
 
         renderCalendar();
 
@@ -1902,9 +1896,7 @@ $("nextMonth").onclick =
     () => {
 
         // Move the displayed month forward by one
-        calendarDate.setMonth(
-            calendarDate.getMonth()+1
-        );
+        calendarDate = new Date(calendarDate.getFullYear(), calendarDate.getMonth()+1, 1);
 
         renderCalendar();
 
@@ -1937,8 +1929,8 @@ $("reminderToggle").onclick =
             );
 
 
-        // Redraw the reminder box
-        renderReminder();
+        // Redraw everything (reminder box + due-today alert)
+        render();
 
     };
 
