@@ -1,6 +1,6 @@
-
-// Supabase authentication and per-user task loading.
+// Local database authentication and per-user task loading.
 // This module handles user login, signup, logout and task loading.
+// NOTE: load order in index.html must be: localdb file -> script.js -> this file.
 
 (function () {
 
@@ -56,14 +56,13 @@
   // Helper function to find an HTML element using its ID.
   const el = id => document.getElementById(id);
 
-  // Stores the current authentication mode.
-  // Default mode is Sign in.
+  // Stores the current authentication mode (default is Sign in).
   let mode = 'signin';
 
 
-  // Function to display authentication messages.
-  // s = message text, ok = whether the message is successful.
-  function msg(s, ok=false) {
+  // Displays authentication messages.
+  // s = message text, ok = true for a success/info message (green), false for an error (red).
+  function msg(s, ok = false) {
 
     // Displays the message inside the authentication message element.
     el('authMsg').textContent = s;
@@ -73,7 +72,7 @@
   }
 
 
-  // Function to switch between Sign in and Sign up modes.
+  // Switches between Sign in and Sign up modes.
   function setMode(m) {
 
     // Updates the current authentication mode.
@@ -101,20 +100,20 @@
   }
 
 
-  // Runs setMode('signin') when the Sign in tab is clicked.
+  // Switch to Sign in mode when the Sign in tab is clicked.
   el('tabSignin').onclick = () => setMode('signin');
 
-  // Runs setMode('signup') when the Sign up tab is clicked.
+  // Switch to Sign up mode when the Sign up tab is clicked.
   el('tabSignup').onclick = () => setMode('signup');
 
 
-  // Creates a new div element for displaying logged-in user information.
+  // Creates a div element for displaying logged-in user information.
   const userBox = document.createElement('div');
 
   // Assigns the user-box CSS class for styling.
   userBox.className = 'user-box';
 
-  // Adds HTML elements for username, email and logout button.
+  // Adds HTML elements for username, email and the logout button.
   userBox.innerHTML = `
     <div class="user-name" id="userName"></div>
     <div class="user-email" id="userEmail"></div>
@@ -126,41 +125,47 @@
   document.getElementById('sidebar').appendChild(userBox);
 
 
-  // Overrides the existing saveTasks function.
+  // Overrides the existing saveTasks function (from script.js).
   // Saves tasks separately for the currently logged-in user.
-  // If no user is logged in, it returns an already resolved Promise.
+  // FIX: save errors are now caught and shown to the user instead of failing silently.
   saveTasks = function () {
 
-    if (currentUser)
-      return LocalDB.saveTasks(currentUser.id, tasks);
+    // If no user is logged in, there is nothing to save.
+    if (!currentUser)
+      return Promise.resolve();
 
-    return Promise.resolve();
+    // Save this user's tasks; if saving fails, show a toast message.
+    return Promise.resolve(LocalDB.saveTasks(currentUser.id, tasks))
+      .catch(err => {
+        showToast('Could not save tasks: ' + (err.message || 'unknown error'));
+      });
   };
 
 
   // Stores the original showPage function before modifying it.
   const originalShowPage = showPage;
 
-  // Overrides showPage to add personalized dashboard functionality.
+  // Overrides showPage to add the logged-in user's name to the dashboard greeting.
   showPage = function (page) {
 
     // Calls the original function to display the requested page.
     originalShowPage(page);
 
-    // Checks whether a user is logged in and dashboard is being opened.
+    // Only when a user is logged in and the dashboard is being opened.
     if (currentUser && page === 'dashboard') {
 
-      // Finds the dashboard heading element.
+      // Finds the page heading element.
       const h = el('pageTitle');
 
-      // Replaces the default greeting with the logged-in user's name.
+      // FIX: the real title is "Good Morning! 👋", so match that text
+      // (the old regex looked for "Hey!" which never exists).
       h.textContent =
-        h.textContent.replace(/^Hey\s*!/, 'Hey ' + currentUser.name + '!');
+        h.textContent.replace(/^Good Morning!/, 'Good Morning, ' + currentUser.name + '!');
     }
   };
 
 
-  // Function to start a session after successful login or signup.
+  // Starts a session after successful login/signup or session restore.
   // async allows us to use await inside this function.
   async function startSession(user) {
 
@@ -202,8 +207,7 @@
   }
 
 
-  // Adds a submit event listener to the authentication form.
-  // This function runs when the user submits the form.
+  // Runs when the user submits the authentication form.
   el('authForm').addEventListener('submit', async e => {
 
     // Prevents the browser from reloading the page after form submission.
@@ -220,9 +224,7 @@
 
     try {
 
-      // Checks the selected mode.
-      // If signup is selected, register a new user.
-      // Otherwise, login using the existing account.
+      // If signup mode: register a new user, otherwise log in the existing one.
       const user = mode === 'signup'
 
         // Registers a new user using name, email and password.
@@ -254,7 +256,7 @@
   });
 
 
-  // Adds a click event to the Logout button.
+  // Runs when the Log out button is clicked.
   el('logoutBtn').onclick = async () => {
 
     // Stores the logout button element.
@@ -265,7 +267,7 @@
 
     try {
 
-      // Synchronizes pending task changes before logging out.
+      // Saves any pending task changes before logging out.
       await LocalDB.flushTasks();
 
       // Clears the current login session.
@@ -291,10 +293,9 @@
 
     } catch (err) {
 
-      // Displays an alert if tasks could not be synchronized
-      // or logout fails.
+      // Shows an alert if tasks could not be saved or logout fails.
       alert(
-        'Your latest tasks could not be synced. Please check your internet/database connection and try logging out again. '
+        'Your latest tasks could not be saved. Please check the database connection and try logging out again. '
         + (err.message || '')
       );
 
@@ -307,7 +308,7 @@
 
 
   // Immediately invoked async function.
-  // Runs automatically when this authentication module loads.
+  // Runs automatically when this module loads.
   (async () => {
 
     try {
@@ -324,8 +325,8 @@
 
     } catch (err) {
 
-      // Displays an error if initialization or session restoration fails.
-      msg(err.message || 'Supabase connection failed');
+      // FIX: message no longer mentions Supabase, since this version uses LocalDB.
+      msg(err.message || 'Could not connect to the local database');
     }
 
   })();
