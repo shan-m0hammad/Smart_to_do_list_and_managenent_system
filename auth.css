@@ -1,20 +1,134 @@
-#authOverlay{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;
-    background:rgba(15,23,42,.72);backdrop-filter:blur(6px);padding:16px}
-.auth-card{width:100%;max-width:380px;background:#fff;color:#1f2937;border-radius:18px;padding:28px;
-    box-shadow:0 20px 60px rgba(0,0,0,.35)}
-.auth-logo{font-size:24px;font-weight:700;text-align:center;margin-bottom:18px}
-.auth-logo span{color:#6c5ce7}
-.auth-tabs{display:flex;gap:6px;background:#eef0f6;border-radius:12px;padding:4px;margin-bottom:18px}
-.auth-tabs button{flex:1;border:0;background:transparent;padding:10px;border-radius:9px;font:inherit;
-    font-weight:600;cursor:pointer;color:#6b7280}
-.auth-tabs button.active{background:#fff;color:#1f2937;box-shadow:0 1px 4px rgba(0,0,0,.12)}
-#authForm{display:flex;flex-direction:column;gap:12px}
-#authForm input{padding:12px 14px;border:1px solid #d1d5db;border-radius:10px;font:inherit}
-#authForm input[hidden]{display:none}
-#authForm .primary-btn{width:100%;justify-content:center}
-.auth-msg{min-height:18px;font-size:13px;color:#dc2626;margin:0}
-.auth-msg.ok{color:#16a34a}
-.user-box{position:absolute;left:16px;right:16px;bottom:20px;padding:14px 4px 0;border-top:1px solid rgba(127,127,127,.25);font-size:13px}
-.user-box .user-name{font-weight:700}
-.user-box .user-email{opacity:.7;margin:2px 0 10px;overflow-wrap:anywhere}
-.user-box .secondary-btn{width:100%}
+
+/* Main authentication overlay covering the entire screen */
+#authOverlay {
+    position: fixed; /* Keeps the overlay fixed even when the page scrolls */
+    inset: 0; /* Covers the full screen from top, right, bottom and left */
+    z-index: 9999; /* Places the authentication overlay above other elements */
+    display: flex; /* Uses Flexbox for arranging child elements */
+    align-items: center; /* Vertically centers the authentication card */
+    justify-content: center; /* Horizontally centers the authentication card */
+    background: rgba(15,23,42,.72); /* Adds a dark transparent background */
+    backdrop-filter: blur(6px); /* Blurs the content behind the overlay */
+    padding: 16px; /* Adds spacing around the overlay content */
+}
+
+/* Main authentication card containing login and signup forms */
+.auth-card {
+    width: 100%; /* Allows the card to use the available width */
+    max-width: 380px; /* Prevents the card from becoming wider than 380px */
+    background: #fff; /* Sets the card background to white */
+    color: #1f2937; /* Sets the default text color */
+    border-radius: 18px; /* Creates rounded corners */
+    padding: 28px; /* Adds internal spacing inside the card */
+    box-shadow: 0 20px 60px rgba(0,0,0,.35); /* Adds a shadow around the card */
+}
+
+/* Styling for the SmartTask logo or application name */
+.auth-logo {
+    font-size: 24px; /* Sets the logo text size */
+    font-weight: 700; /* Makes the logo text bold */
+    text-align: center; /* Aligns the logo in the center */
+    margin-bottom: 18px; /* Adds space below the logo */
+}
+
+/* Highlights a specific part of the logo */
+.auth-logo span {
+    color: #6c5ce7; /* Applies purple color to the highlighted text */
+}
+
+/* Container for Login and Signup tabs */
+.auth-tabs {
+    display: flex; /* Places the tabs horizontally */
+    gap: 6px; /* Adds space between the tabs */
+    background: #eef0f6; /* Sets a light background for the tab container */
+    border-radius: 12px; /* Rounds the tab container corners */
+    padding: 4px; /* Adds internal spacing */
+    margin-bottom: 18px; /* Adds space below the tabs */
+}
+
+/* Common styling for Login and Signup buttons */
+.auth-tabs button {
+    flex: 1; /* Gives both buttons equal available width */
+    border: 0; /* Removes the default button border */
+    background: transparent; /* Makes the button background transparent */
+    padding: 10px; /* Adds spacing inside the buttons */
+    border-radius: 9px; /* Rounds the button corners */
+    font: inherit; /* Uses the font settings inherited from the parent */
+    font-weight: 600; /* Makes button text semi-bold */
+    cursor: pointer; /* Shows a pointer cursor on hover */
+    color: #6b7280; /* Sets the default tab text color to grey */
+}
+
+/* Styling for the currently selected authentication tab */
+.auth-tabs button.active {
+    background: #fff; /* Gives the active tab a white background */
+    color: #1f2937; /* Changes active tab text to dark grey */
+    box-shadow: 0 1px 4px rgba(0,0,0,.12); /* Adds a subtle shadow */
+}
+
+/* Main authentication form layout */
+#authForm {
+    display: flex; /* Uses Flexbox for arranging form elements */
+    flex-direction: column; /* Places input fields vertically */
+    gap: 12px; /* Adds 12px spacing between form elements */
+}
+
+/* Styling for input fields inside the authentication form */
+#authForm input {
+    padding: 12px 14px; /* Adds vertical and horizontal internal spacing */
+    border: 1px solid #d1d5db; /* Adds a light grey border */
+    border-radius: 10px; /* Rounds the input field corners */
+    font: inherit; /* Uses the inherited font family and size */
+}
+
+/* Hides input fields that have the hidden attribute */
+#authForm input[hidden] {
+    display: none; /* Completely removes hidden inputs from visual layout */
+}
+
+/* Styling for the primary authentication button */
+#authForm .primary-btn {
+    width: 100%; /* Makes the button occupy the full available width */
+    justify-content: center; /* Centers the button content horizontally */
+}
+
+/* Message area for authentication errors and status messages */
+.auth-msg {
+    min-height: 18px; /* Reserves minimum height for messages */
+    font-size: 13px; /* Sets a small message text size */
+    color: #dc2626; /* Displays error messages in red */
+    margin: 0; /* Removes default paragraph margins */
+}
+
+/* Styling when the authentication message indicates success */
+.auth-msg.ok {
+    color: #16a34a; /* Displays successful messages in green */
+}
+
+/* User information section, usually shown in a sidebar */
+.user-box {
+    position: absolute; /* Positions the user section relative to its positioned parent */
+    left: 16px; /* Adds 16px spacing from the left */
+    right: 16px; /* Adds 16px spacing from the right */
+    bottom: 20px; /* Places the section 20px above the bottom */
+    padding: 14px 4px 0; /* Adds top and horizontal internal spacing */
+    border-top: 1px solid rgba(127,127,127,.25); /* Adds a subtle top divider */
+    font-size: 13px; /* Sets the user information text size */
+}
+
+/* Styling for the logged-in user's name */
+.user-box .user-name {
+    font-weight: 700; /* Displays the user's name in bold */
+}
+
+/* Styling for the logged-in user's email address */
+.user-box .user-email {
+    opacity: .7; /* Makes the email slightly transparent */
+    margin: 2px 0 10px; /* Adds spacing around the email */
+    overflow-wrap: anywhere; /* Allows long email addresses to wrap */
+}
+
+/* Makes the secondary button fill the available user-box width */
+.user-box .secondary-btn {
+    width: 100%; /* Sets the secondary button width to 100% */
+}
