@@ -2353,3 +2353,36 @@ updateNotifyBtn();
 setInterval(checkDueNotifications, 15000);          // check every 15 seconds
 document.addEventListener("visibilitychange", () => { if (!document.hidden) checkDueNotifications(); });
 setTimeout(checkDueNotifications, 3000);            // first check shortly after load
+
+
+/* ===== Animation helpers ===== */
+
+// 1) After every page change, add the class "animating" for a moment so task rows slide in.
+//    (It is NOT left on permanently, otherwise every small update would replay the animation.)
+let animTimer = null;
+const originalShowPageForAnim = showPage;
+showPage = function (page) {
+    originalShowPageForAnim(page);
+    document.body.classList.add("animating");
+    clearTimeout(animTimer);
+    animTimer = setTimeout(() => document.body.classList.remove("animating"), 900);
+};
+
+// 2) When a task is completed, make its tick pop and its row flash green.
+const originalToggleTaskForAnim = toggleTask;
+toggleTask = function (id) {
+    originalToggleTaskForAnim(id);
+    document.querySelectorAll('.check.done[onclick="toggleTask(' + id + ')"]').forEach(btn => {
+        btn.classList.add("pop");
+        const row = btn.closest(".task");
+        if (row) row.classList.add("flash");
+    });
+};
+
+// 3) Smooth fade when switching between light and dark theme.
+const originalApplyThemeForAnim = applyTheme;
+applyTheme = function (theme) {
+    document.documentElement.classList.add("theme-anim");
+    originalApplyThemeForAnim(theme);
+    setTimeout(() => document.documentElement.classList.remove("theme-anim"), 450);
+};
