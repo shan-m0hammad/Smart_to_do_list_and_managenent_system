@@ -1,7 +1,7 @@
 
 /* Main authentication overlay covering the entire screen */
 #authOverlay {
-    position: fixed; /* Keeps the overlay fixed even when the page scrolls */
+    position: fixed; /* Keeps the overlay fixed even when the page scrolls  */
     inset: 0; /* Covers the full screen from top, right, bottom and left */
     z-index: 9999; /* Places the authentication overlay above other elements */
     display: flex; /* Uses Flexbox for arranging child elements */
