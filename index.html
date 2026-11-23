@@ -9,7 +9,7 @@
 <!-- Configures the page viewport for responsive mobile scaling. -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- Sets the title displayed in the browser tab. -->
-<title>Smart To-Do List & Task Management System</title>
+<title>Smart To-Do List &amp; Task Management System</title>
 
 <!-- Loads the main stylesheet for the application design. -->
 <link rel="stylesheet" href="style.css">
@@ -273,11 +273,9 @@
                             <h2>Today's Tasks</h2>
 
                             <!-- Creates a p element in the page structure. -->
-                            <p class="muted"
-                               <!-- Text displayed to the user inside the surrounding HTML element. -->
-                               style="font-size:13px;margin-top:4px"
-                               <!-- Displays a summary of tasks scheduled for today. -->
-                               id="todaySummary">
+                            <!-- Text displayed to the user inside the surrounding HTML element. -->
+                            <!-- Displays a summary of tasks scheduled for today. -->
+                            <p class="muted" style="font-size:13px;margin-top:4px" id="todaySummary">
                                 <!-- Text displayed to the user inside the surrounding HTML element. -->
                                 No tasks for today.
                             <!-- Closes the p element. -->
@@ -286,9 +284,8 @@
                         </div>
 
                         <!-- Creates a button element in the page structure. -->
-                        <button class="secondary-btn"
-                                <!-- Calls showPage to navigate to the My Tasks page. -->
-                                onclick="showPage('tasks')">
+                        <!-- Calls showPage to navigate to the My Tasks page. -->
+                        <button class="secondary-btn" onclick="showPage('tasks')">
                             <!-- Text displayed to the user inside the surrounding HTML element. -->
                             View All
                         <!-- Closes the button element. -->
@@ -316,9 +313,8 @@
                             <h2>Progress</h2>
 
                             <!-- Creates a p element in the page structure. -->
-                            <p class="muted"
-                               <!-- Text displayed to the user inside the surrounding HTML element. -->
-                               style="font-size:13px;margin-top:4px">
+                            <!-- Text displayed to the user inside the surrounding HTML element. -->
+                            <p class="muted" style="font-size:13px;margin-top:4px">
                                 <!-- Text displayed to the user inside the surrounding HTML element. -->
                                 Keep moving forward.
                             <!-- Closes the p element. -->
@@ -327,9 +323,8 @@
                         </div>
 
                         <!-- Creates a button element in the page structure. -->
-                        <button class="secondary-btn"
-                                <!-- Calls showPage to navigate to the Progress page. -->
-                                onclick="showPage('progress')">
+                        <!-- Calls showPage to navigate to the Progress page. -->
+                        <button class="secondary-btn" onclick="showPage('progress')">
                             <!-- Text displayed to the user inside the surrounding HTML element. -->
                             Details
                         <!-- Closes the button element. -->
@@ -343,11 +338,9 @@
                     <div class="progress-wrap">
 
                         <!-- Circular progress indicator styled using the --progress CSS variable. -->
-                        <div class="progress-circle"
-                             <!-- Text displayed to the user inside the surrounding HTML element. -->
-                             id="dashboardCircle"
-                             <!-- Text displayed to the user inside the surrounding HTML element. -->
-                             style="--progress:0%">
+                        <!-- Text displayed to the user inside the surrounding HTML element. -->
+                        <!-- Text displayed to the user inside the surrounding HTML element. -->
+                        <div class="progress-circle" id="dashboardCircle" style="--progress:0%">
 
                             <!-- Displays the dashboard completion percentage. -->
                             <span id="dashboardPercent">0%</span>
@@ -370,11 +363,9 @@
                             <div class="progress-bar">
 
                                 <!-- Progress bar fill; its width represents completion. -->
-                                <div class="progress-fill"
-                                     <!-- Text displayed to the user inside the surrounding HTML element. -->
-                                     id="dashboardProgress"
-                                     <!-- Text displayed to the user inside the surrounding HTML element. -->
-                                     style="width:0%">
+                                <!-- Text displayed to the user inside the surrounding HTML element. -->
+                                <!-- Text displayed to the user inside the surrounding HTML element. -->
+                                <div class="progress-fill" id="dashboardProgress" style="width:0%">
                                 <!-- Closes the div element. -->
                                 </div>
 
@@ -382,9 +373,8 @@
                             </div>
 
                             <!-- Creates a small element in the page structure. -->
-                            <small class="muted"
-                                   <!-- Displays completed-task and total-task information. -->
-                                   id="progressText">
+                            <!-- Displays completed-task and total-task information. -->
+                            <small class="muted" id="progressText">
                                 <!-- Text displayed to the user inside the surrounding HTML element. -->
                                 0 of 0 tasks completed
                             <!-- Closes the small element. -->
@@ -418,9 +408,8 @@
                             <h2>Focus on These</h2>
 
                             <!-- Creates a p element in the page structure. -->
-                            <p class="muted"
-                               <!-- Text displayed to the user inside the surrounding HTML element. -->
-                               style="font-size:13px;margin-top:4px">
+                            <!-- Text displayed to the user inside the surrounding HTML element. -->
+                            <p class="muted" style="font-size:13px;margin-top:4px">
                                 <!-- Text displayed to the user inside the surrounding HTML element. -->
                                 Your most important tasks.
                             <!-- Closes the p element. -->
@@ -484,9 +473,8 @@
                     <h2>My Tasks</h2>
 
                     <!-- Creates a p element in the page structure. -->
-                    <p class="muted"
-                       <!-- Text displayed to the user inside the surrounding HTML element. -->
-                       style="font-size:13px;margin-top:4px">
+                    <!-- Text displayed to the user inside the surrounding HTML element. -->
+                    <p class="muted" style="font-size:13px;margin-top:4px">
                         <!-- Text displayed to the user inside the surrounding HTML element. -->
                         Manage everything in one place.
                     <!-- Closes the p element. -->
@@ -495,9 +483,8 @@
                 </div>
 
                 <!-- Creates a button element in the page structure. -->
-                <button class="primary-btn"
-                        <!-- Text displayed to the user inside the surrounding HTML element. -->
-                        onclick="openAddModal()">
+                <!-- Text displayed to the user inside the surrounding HTML element. -->
+                <button class="primary-btn" onclick="openAddModal()">
                     <!-- Text displayed to the user inside the surrounding HTML element. -->
                     ＋ Add Task
                 <!-- Closes the button element. -->
@@ -517,9 +504,8 @@
                     <span>🔍</span>
 
                     <!-- Input used to search task records. -->
-                    <input id="searchInput"
-                           <!-- Text displayed to the user inside the surrounding HTML element. -->
-                           placeholder="Search your tasks...">
+                    <!-- Text displayed to the user inside the surrounding HTML element. -->
+                    <input id="searchInput" placeholder="Search your tasks...">
 
                 <!-- Closes the div element. -->
                 </div>
@@ -567,54 +553,48 @@
             <div class="filters" id="filters">
 
                 <!-- Creates a button element in the page structure. -->
-                <button class="filter-btn active"
-                        <!-- Filter button; data-filter identifies the category to display. -->
-                        data-filter="all">
+                <!-- Filter button; data-filter identifies the category to display. -->
+                <button class="filter-btn active" data-filter="all">
                     <!-- Text displayed to the user inside the surrounding HTML element. -->
                     All
                 <!-- Closes the button element. -->
                 </button>
 
                 <!-- Creates a button element in the page structure. -->
-                <button class="filter-btn"
-                        <!-- Filter button; data-filter identifies the category to display. -->
-                        data-filter="today">
+                <!-- Filter button; data-filter identifies the category to display. -->
+                <button class="filter-btn" data-filter="today">
                     <!-- Text displayed to the user inside the surrounding HTML element. -->
                     Today
                 <!-- Closes the button element. -->
                 </button>
 
                 <!-- Creates a button element in the page structure. -->
-                <button class="filter-btn"
-                        <!-- Filter button; data-filter identifies the category to display. -->
-                        data-filter="pending">
+                <!-- Filter button; data-filter identifies the category to display. -->
+                <button class="filter-btn" data-filter="pending">
                     <!-- Text displayed to the user inside the surrounding HTML element. -->
                     Pending
                 <!-- Closes the button element. -->
                 </button>
 
                 <!-- Creates a button element in the page structure. -->
-                <button class="filter-btn"
-                        <!-- Filter button; data-filter identifies the category to display. -->
-                        data-filter="completed">
+                <!-- Filter button; data-filter identifies the category to display. -->
+                <button class="filter-btn" data-filter="completed">
                     <!-- Text displayed to the user inside the surrounding HTML element. -->
                     Completed
                 <!-- Closes the button element. -->
                 </button>
 
                 <!-- Creates a button element in the page structure. -->
-                <button class="filter-btn"
-                        <!-- Filter button; data-filter identifies the category to display. -->
-                        data-filter="overdue">
+                <!-- Filter button; data-filter identifies the category to display. -->
+                <button class="filter-btn" data-filter="overdue">
                     <!-- Text displayed to the user inside the surrounding HTML element. -->
                     Overdue
                 <!-- Closes the button element. -->
                 </button>
 
                 <!-- Creates a button element in the page structure. -->
-                <button class="filter-btn"
-                        <!-- Filter button; data-filter identifies the category to display. -->
-                        data-filter="high">
+                <!-- Filter button; data-filter identifies the category to display. -->
+                <button class="filter-btn" data-filter="high">
                     <!-- Text displayed to the user inside the surrounding HTML element. -->
                     High Priority
                 <!-- Closes the button element. -->
@@ -648,9 +628,8 @@
                 <button id="prevMonth">‹</button>
 
                 <!-- Creates a div element in the page structure. -->
-                <div class="calendar-title"
-                     <!-- Displays the selected month and year. -->
-                     id="calendarTitle">
+                <!-- Displays the selected month and year. -->
+                <div class="calendar-title" id="calendarTitle">
                 <!-- Closes the div element. -->
                 </div>
 
@@ -661,9 +640,8 @@
             </div>
 
             <!-- Creates a div element in the page structure. -->
-            <div class="calendar"
-                 <!-- Container where JavaScript builds the calendar grid. -->
-                 id="calendarGrid">
+            <!-- Container where JavaScript builds the calendar grid. -->
+            <div class="calendar" id="calendarGrid">
             <!-- Closes the div element. -->
             </div>
 
@@ -692,9 +670,8 @@
             </div>
 
             <!-- Creates a div element in the page structure. -->
-            <div class="task-list"
-                 <!-- Displays tasks for the selected calendar date. -->
-                 id="selectedDateTasks">
+            <!-- Displays tasks for the selected calendar date. -->
+            <div class="task-list" id="selectedDateTasks">
             <!-- Closes the div element. -->
             </div>
 
@@ -722,9 +699,8 @@
                     <h2>Your Progress</h2>
 
                     <!-- Creates a p element in the page structure. -->
-                    <p class="muted"
-                       <!-- Text displayed to the user inside the surrounding HTML element. -->
-                       style="font-size:13px;margin-top:4px">
+                    <!-- Text displayed to the user inside the surrounding HTML element. -->
+                    <p class="muted" style="font-size:13px;margin-top:4px">
                         <!-- Text displayed to the user inside the surrounding HTML element. -->
                         A simple view of your productivity.
                     <!-- Closes the p element. -->
@@ -741,11 +717,9 @@
             <div class="progress-wrap">
 
                 <!-- Circular progress indicator styled using the --progress CSS variable. -->
-                <div class="progress-circle"
-                     <!-- Text displayed to the user inside the surrounding HTML element. -->
-                     id="progressCircle"
-                     <!-- Text displayed to the user inside the surrounding HTML element. -->
-                     style="--progress:0%">
+                <!-- Text displayed to the user inside the surrounding HTML element. -->
+                <!-- Text displayed to the user inside the surrounding HTML element. -->
+                <div class="progress-circle" id="progressCircle" style="--progress:0%">
 
                     <!-- Creates a span element in the page structure. -->
                     <span id="progressPercent">0%</span>
@@ -768,11 +742,9 @@
                     <div class="progress-bar">
 
                         <!-- Progress bar fill; its width represents completion. -->
-                        <div class="progress-fill"
-                             <!-- Text displayed to the user inside the surrounding HTML element. -->
-                             id="progressFill"
-                             <!-- Text displayed to the user inside the surrounding HTML element. -->
-                             style="width:0%">
+                        <!-- Text displayed to the user inside the surrounding HTML element. -->
+                        <!-- Text displayed to the user inside the surrounding HTML element. -->
+                        <div class="progress-fill" id="progressFill" style="width:0%">
                         <!-- Closes the div element. -->
                         </div>
 
@@ -780,9 +752,8 @@
                     </div>
 
                     <!-- Creates a p element in the page structure. -->
-                    <p class="muted"
-                       <!-- Text displayed to the user inside the surrounding HTML element. -->
-                       id="progressDetail">
+                    <!-- Text displayed to the user inside the surrounding HTML element. -->
+                    <p class="muted" id="progressDetail">
                         <!-- Text displayed to the user inside the surrounding HTML element. -->
                         No tasks yet.
                     <!-- Closes the p element. -->
@@ -799,9 +770,8 @@
 
 
         <!-- Creates a div element in the page structure. -->
-        <div class="progress-grid"
-             <!-- Text displayed to the user inside the surrounding HTML element. -->
-             style="margin-top:22px">
+        <!-- Text displayed to the user inside the surrounding HTML element. -->
+        <div class="progress-grid" style="margin-top:22px">
 
             <!-- Creates a div element in the page structure. -->
             <div class="progress-stat">
@@ -863,9 +833,8 @@
                     <h2>Settings</h2>
 
                     <!-- Creates a p element in the page structure. -->
-                    <p class="muted"
-                       <!-- Text displayed to the user inside the surrounding HTML element. -->
-                       style="font-size:13px;margin-top:4px">
+                    <!-- Text displayed to the user inside the surrounding HTML element. -->
+                    <p class="muted" style="font-size:13px;margin-top:4px">
                         <!-- Text displayed to the user inside the surrounding HTML element. -->
                         Keep your task experience simple.
                     <!-- Closes the p element. -->
@@ -888,9 +857,8 @@
                     <strong>Daily reminders</strong>
 
                     <!-- Creates a p element in the page structure. -->
-                    <p class="muted"
-                       <!-- Text displayed to the user inside the surrounding HTML element. -->
-                       style="font-size:13px;margin-top:4px">
+                    <!-- Text displayed to the user inside the surrounding HTML element. -->
+                    <p class="muted" style="font-size:13px;margin-top:4px">
                         <!-- Text displayed to the user inside the surrounding HTML element. -->
                         Show visual reminders for today's tasks.
                     <!-- Closes the p element. -->
@@ -900,9 +868,8 @@
                 </div>
 
                 <!-- Creates a button element in the page structure. -->
-                <button class="toggle on"
-                        <!-- Toggle for enabling or disabling daily visual reminders. -->
-                        id="reminderToggle">
+                <!-- Toggle for enabling or disabling daily visual reminders. -->
+                <button class="toggle on" id="reminderToggle">
 
                     <!-- Creates a span element in the page structure. -->
                     <span></span>
@@ -924,11 +891,10 @@
                     <strong>Clear all tasks</strong>
 
                     <!-- Creates a p element in the page structure. -->
-                    <p class="muted"
-                       <!-- Text displayed to the user inside the surrounding HTML element. -->
-                       style="font-size:13px;margin-top:4px">
+                    <!-- Text displayed to the user inside the surrounding HTML element. -->
+                    <p class="muted" style="font-size:13px;margin-top:4px">
                         <!-- Text displayed to the user inside the surrounding HTML element. -->
-                        Remove all saved tasks from this browser.
+                        Remove all your saved tasks.
                     <!-- Closes the p element. -->
                     </p>
 
@@ -936,9 +902,8 @@
                 </div>
 
                 <!-- Creates a button element in the page structure. -->
-                <button class="secondary-btn"
-                        <!-- Button that starts the clear-all-tasks action. -->
-                        id="clearAllBtn">
+                <!-- Button that starts the clear-all-tasks action. -->
+                <button class="secondary-btn" id="clearAllBtn">
                     <!-- Text displayed to the user inside the surrounding HTML element. -->
                     Clear All
                 <!-- Closes the button element. -->
@@ -991,9 +956,8 @@
 <div class="mobile-nav">
 
     <!-- Creates a button element in the page structure. -->
-    <button class="active"
-            <!-- Navigation button; data-page identifies which page should be shown. -->
-            data-page="dashboard">
+    <!-- Navigation button; data-page identifies which page should be shown. -->
+    <button class="active" data-page="dashboard">
         <!-- Text displayed to the user inside the surrounding HTML element. -->
         🏠
         <!-- Creates a span element in the page structure. -->
@@ -1034,9 +998,8 @@
 
 <!-- MODAL -->
 <!-- Creates a div element in the page structure. -->
-<div class="modal-backdrop"
-     <!-- Backdrop behind the add/edit task modal. -->
-     id="modalBackdrop">
+<!-- Backdrop behind the add/edit task modal. -->
+<div class="modal-backdrop" id="modalBackdrop">
 
     <!-- Popup panel containing a form or pending-task content. -->
     <div class="modal">
@@ -1052,9 +1015,8 @@
             </h2>
 
             <!-- Creates a button element in the page structure. -->
-            <button class="close"
-                    <!-- Button for closing the add/edit task modal. -->
-                    id="closeModal">
+            <!-- Button for closing the add/edit task modal. -->
+            <button class="close" id="closeModal">
                 <!-- Text displayed to the user inside the surrounding HTML element. -->
                 ×
             <!-- Closes the button element. -->
@@ -1070,9 +1032,8 @@
         <form id="taskForm">
 
             <!-- Creates a input element in the page structure. -->
-            <input type="hidden"
-                   <!-- Hidden field that stores the ID of the task being edited. -->
-                   id="editId">
+            <!-- Hidden field that stores the ID of the task being edited. -->
+            <input type="hidden" id="editId">
 
             <!-- Arranges task form fields in a grid. -->
             <div class="form-grid">
@@ -1088,13 +1049,10 @@
                     </label>
 
                     <!-- Required input for the task title, limited to 100 characters. -->
-                    <input id="taskTitle"
-                           <!-- Text displayed to the user inside the surrounding HTML element. -->
-                           required
-                           <!-- Text displayed to the user inside the surrounding HTML element. -->
-                           maxlength="100"
-                           <!-- Text displayed to the user inside the surrounding HTML element. -->
-                           placeholder="e.g. Complete PBL Documentation">
+                    <!-- Text displayed to the user inside the surrounding HTML element. -->
+                    <!-- Text displayed to the user inside the surrounding HTML element. -->
+                    <!-- Text displayed to the user inside the surrounding HTML element. -->
+                    <input id="taskTitle" required maxlength="100" placeholder="e.g. Complete PBL Documentation">
 
                 <!-- Closes the div element. -->
                 </div>
@@ -1111,11 +1069,9 @@
                     </label>
 
                     <!-- Optional task description field, limited to 500 characters. -->
-                    <textarea id="taskDescription"
-                              <!-- Text displayed to the user inside the surrounding HTML element. -->
-                              maxlength="500"
-                              <!-- Text displayed to the user inside the surrounding HTML element. -->
-                              placeholder="What needs to be done?"></textarea>
+                    <!-- Text displayed to the user inside the surrounding HTML element. -->
+                    <!-- Text displayed to the user inside the surrounding HTML element. -->
+                    <textarea id="taskDescription" maxlength="500" placeholder="What needs to be done?"></textarea>
 
                 <!-- Closes the div element. -->
                 </div>
@@ -1142,9 +1098,8 @@
                         </option>
 
                         <!-- Defines one option in a dropdown list. -->
-                        <option value="medium"
-                                <!-- Text displayed to the user inside the surrounding HTML element. -->
-                                selected>
+                        <!-- Text displayed to the user inside the surrounding HTML element. -->
+                        <option value="medium" selected>
                             <!-- Text displayed to the user inside the surrounding HTML element. -->
                             Medium
                         <!-- Closes the option element. -->
@@ -1175,11 +1130,9 @@
                     </label>
 
                     <!-- Creates a input element in the page structure. -->
-                    <input type="date"
-                           <!-- Required date input for the task due date. -->
-                           id="taskDate"
-                           <!-- Text displayed to the user inside the surrounding HTML element. -->
-                           required>
+                    <!-- Required date input for the task due date. -->
+                    <!-- Text displayed to the user inside the surrounding HTML element. -->
+                    <input type="date" id="taskDate" required>
 
                 <!-- Closes the div element. -->
                 </div>
@@ -1196,11 +1149,9 @@
                     </label>
 
                     <!-- Optional input for a task category. -->
-                    <input id="taskCategory"
-                           <!-- Text displayed to the user inside the surrounding HTML element. -->
-                           maxlength="40"
-                           <!-- Text displayed to the user inside the surrounding HTML element. -->
-                           placeholder="e.g. College">
+                    <!-- Text displayed to the user inside the surrounding HTML element. -->
+                    <!-- Text displayed to the user inside the surrounding HTML element. -->
+                    <input id="taskCategory" maxlength="40" placeholder="e.g. College">
 
                 <!-- Closes the div element. -->
                 </div>
@@ -1215,22 +1166,18 @@
             <div class="form-actions">
 
                 <!-- Creates a button element in the page structure. -->
-                <button type="button"
-                        <!-- Text displayed to the user inside the surrounding HTML element. -->
-                        class="secondary-btn"
-                        <!-- Button for cancelling and closing the task form. -->
-                        id="cancelModal">
+                <!-- Text displayed to the user inside the surrounding HTML element. -->
+                <!-- Button for cancelling and closing the task form. -->
+                <button type="button" class="secondary-btn" id="cancelModal">
                     <!-- Text displayed to the user inside the surrounding HTML element. -->
                     Cancel
                 <!-- Closes the button element. -->
                 </button>
 
                 <!-- Creates a button element in the page structure. -->
-                <button type="submit"
-                        <!-- Text displayed to the user inside the surrounding HTML element. -->
-                        class="primary-btn"
-                        <!-- Submit button for saving the task form. -->
-                        id="saveTaskBtn">
+                <!-- Text displayed to the user inside the surrounding HTML element. -->
+                <!-- Submit button for saving the task form. -->
+                <button type="submit" class="primary-btn" id="saveTaskBtn">
                     <!-- Text displayed to the user inside the surrounding HTML element. -->
                     Add Task
                 <!-- Closes the button element. -->
@@ -1273,17 +1220,15 @@
 
 <!-- TOAST -->
 <!-- Toast notification container for short feedback messages. -->
-<div class="toast"
-     <!-- Text displayed to the user inside the surrounding HTML element. -->
-     id="toast">
+<!-- Text displayed to the user inside the surrounding HTML element. -->
+<div class="toast" id="toast">
 
     <!-- Displays the toast notification message. -->
     <span id="toastText"></span>
 
     <!-- Undo button that can reverse a supported action. -->
-    <button id="undoBtn"
-            <!-- Text displayed to the user inside the surrounding HTML element. -->
-            style="display:none">
+    <!-- Text displayed to the user inside the surrounding HTML element. -->
+    <button id="undoBtn" style="display:none">
         <!-- Text displayed to the user inside the surrounding HTML element. -->
         UNDO
     <!-- Closes the button element. -->
