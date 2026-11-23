@@ -1,797 +1,1310 @@
 <!DOCTYPE html>
+<!-- SmartTask main HTML file: structure for dashboard, tasks, calendar, progress, settings and modals. -->
+<!-- Starts the HTML document and declares its language. -->
 <html lang="en">
+<!-- Starts the document head for metadata and linked resources. -->
 <head>
+<!-- Sets the character encoding for text and symbols. -->
 <meta charset="UTF-8">
+<!-- Configures the page viewport for responsive mobile scaling. -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Sets the title displayed in the browser tab. -->
 <title>Smart To-Do List & Task Management System</title>
 
+<!-- Loads the main stylesheet for the application design. -->
 <link rel="stylesheet" href="style.css">
+<!-- Loads the authentication screen stylesheet. -->
 <link rel="stylesheet" href="auth.css">
+<!-- Closes the document head. -->
 </head>
 
+<!-- Starts the visible webpage content. -->
 <body>
 
+<!-- Main wrapper containing the SmartTask application. -->
 <div class="app">
 
+<!-- Creates the sidebar navigation area. -->
 <aside class="sidebar" id="sidebar">
+    <!-- Groups the application logo and name. -->
     <div class="logo">
+        <!-- Displays the checkmark logo icon. -->
         <div class="logo-icon">✓</div>
+        <!-- Displays the SmartTask application name. -->
         <h2>Smart<span>Task</span></h2>
+    <!-- Closes the div element. -->
     </div>
 
+    <!-- Groups the navigation controls. -->
     <nav class="nav">
+        <!-- Navigation button; data-page identifies which page should be shown. -->
         <button class="active" data-page="dashboard">
+            <!-- Displays the icon for a navigation item. -->
             <span class="nav-icon">🏠</span>Dashboard
+        <!-- Closes the button element. -->
         </button>
 
+        <!-- Navigation button; data-page identifies which page should be shown. -->
         <button data-page="tasks">
+            <!-- Displays the icon for a navigation item. -->
             <span class="nav-icon">📋</span>My Tasks
+        <!-- Closes the button element. -->
         </button>
 
+        <!-- Navigation button; data-page identifies which page should be shown. -->
         <button data-page="calendar">
+            <!-- Displays the icon for a navigation item. -->
             <span class="nav-icon">📅</span>Calendar
+        <!-- Closes the button element. -->
         </button>
 
+        <!-- Navigation button; data-page identifies which page should be shown. -->
         <button data-page="progress">
+            <!-- Displays the icon for a navigation item. -->
             <span class="nav-icon">📊</span>Progress
+        <!-- Closes the button element. -->
         </button>
 
+        <!-- Navigation button; data-page identifies which page should be shown. -->
         <button data-page="settings">
+            <!-- Displays the icon for a navigation item. -->
             <span class="nav-icon">⚙️</span>Settings
+        <!-- Closes the button element. -->
         </button>
+    <!-- Closes the nav element. -->
     </nav>
+<!-- Closes the aside element. -->
 </aside>
 
+<!-- Contains the main application content. -->
 <main class="main">
 
+    <!-- Starts the document head for metadata and linked resources. -->
     <header class="topbar">
+        <!-- Creates a div element in the page structure. -->
         <div style="display:flex;gap:12px;align-items:flex-start">
 
+            <!-- Button for opening the navigation menu on small screens. -->
             <button class="mobile-menu" id="menuBtn">☰</button>
 
+            <!-- Groups the page title and subtitle. -->
             <div class="greeting">
+                <!-- Element where JavaScript displays the current page heading. -->
                 <h1 id="pageTitle">Hey ! 👋</h1>
+                <!-- Element containing the current page description. -->
                 <p id="pageSubtitle">
+                    <!-- Text displayed to the user inside the surrounding HTML element. -->
                     Here is what needs your attention today.
+                <!-- Closes the p element. -->
                 </p>
+            <!-- Closes the div element. -->
             </div>
 
+        <!-- Closes the div element. -->
         </div>
 
+        <!-- Groups notification, theme and add-task buttons. -->
         <div class="top-actions">
+            <!-- Button that opens pending-task notifications. -->
             <button class="icon-btn notification-btn" id="notificationBtn" aria-label="Show pending tasks" title="Pending tasks">
+                <!-- Displays the pending-task count. -->
                 ♧ <span class="notification-count" id="notificationCount">0</span>
+            <!-- Closes the button element. -->
             </button>
+            <!-- Button that switches between light and dark themes. -->
             <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle theme">
+                <!-- Displays the current theme icon. -->
                 <span id="themeIcon">☾</span><span class="theme-toggle-label">Dark mode</span>
+            <!-- Closes the button element. -->
             </button>
+            <!-- Button that opens the add-task form. -->
             <button class="primary-btn" id="addTaskBtn">＋ Add Task</button>
+        <!-- Closes the div element. -->
         </div>
+    <!-- Closes the document head. -->
     </header>
 
 
     <!-- DASHBOARD -->
+    <!-- Defines an application page that JavaScript can show or hide. -->
     <section class="page active" id="dashboardPage">
 
+        <!-- Dashboard banner for a motivational quote. -->
         <section class="quote-banner glass-panel" aria-live="polite">
+            <!-- Creates a div element in the page structure. -->
             <div class="quote-mark">“</div>
+            <!-- Creates a div element in the page structure. -->
             <div class="quote-content">
+                <!-- Creates a span element in the page structure. -->
                 <span class="eyebrow">A LITTLE DAILY MOMENTUM</span>
+                <!-- Displays the current motivational quote. -->
                 <p id="dailyQuote" class="quote-text">Great things are done by a series of small things brought together.</p>
+                <!-- Displays the quote author. -->
                 <span id="quoteAuthor" class="quote-author">— Vincent van Gogh</span>
+            <!-- Closes the div element. -->
             </div>
+            <!-- Button for loading another motivational quote. -->
             <button class="quote-refresh" id="refreshQuote" aria-label="Refresh motivational quote" title="New quote">↻</button>
+        <!-- Closes the section element. -->
         </section>
+        <!-- Alert button shown when one or more tasks are due today. -->
         <button class="due-alert" id="dueTodayAlert" hidden>
+            <!-- Displays the due-today alert message. -->
             <span class="alert-symbol">◷</span><span id="dueTodayText">You have tasks due today.</span><span class="alert-arrow">→</span>
+        <!-- Closes the button element. -->
         </button>
 
+        <!-- Container for the dashboard statistic cards. -->
         <div class="stats">
 
+            <!-- Statistic card; its data attribute identifies the task filter. -->
             <button type="button" class="stat stat-button" data-stat-filter="all" aria-label="Show all tasks">
+                <!-- Creates a div element in the page structure. -->
                 <div class="stat-top">
+                    <!-- Creates a span element in the page structure. -->
                     <span>Total Tasks</span>
+                    <!-- Creates a div element in the page structure. -->
                     <div class="stat-icon blue">📋</div>
+                <!-- Closes the div element. -->
                 </div>
 
+                <!-- Displays a statistic value updated by JavaScript. -->
                 <div class="stat-number" id="totalCount">0</div>
+                <!-- Explains the statistic shown in the card. -->
                 <div class="stat-label">All your tasks</div>
+            <!-- Closes the button element. -->
             </button>
 
 
+            <!-- Statistic card; its data attribute identifies the task filter. -->
             <button type="button" class="stat stat-button" data-stat-filter="pending" aria-label="Show pending tasks">
+                <!-- Creates a div element in the page structure. -->
                 <div class="stat-top">
+                    <!-- Creates a span element in the page structure. -->
                     <span>Pending</span>
+                    <!-- Creates a div element in the page structure. -->
                     <div class="stat-icon yellow">⏳</div>
+                <!-- Closes the div element. -->
                 </div>
 
+                <!-- Displays a statistic value updated by JavaScript. -->
                 <div class="stat-number" id="pendingCount">0</div>
+                <!-- Explains the statistic shown in the card. -->
                 <div class="stat-label">Need your attention</div>
+            <!-- Closes the button element. -->
             </button>
 
 
+            <!-- Statistic card; its data attribute identifies the task filter. -->
             <button type="button" class="stat stat-button" data-stat-filter="completed" aria-label="Show completed tasks">
+                <!-- Creates a div element in the page structure. -->
                 <div class="stat-top">
+                    <!-- Creates a span element in the page structure. -->
                     <span>Completed</span>
+                    <!-- Creates a div element in the page structure. -->
                     <div class="stat-icon green">✓</div>
+                <!-- Closes the div element. -->
                 </div>
 
+                <!-- Displays a statistic value updated by JavaScript. -->
                 <div class="stat-number" id="completedCount">0</div>
+                <!-- Explains the statistic shown in the card. -->
                 <div class="stat-label">Tasks finished</div>
+            <!-- Closes the button element. -->
             </button>
 
 
+            <!-- Statistic card; its data attribute identifies the task filter. -->
             <button type="button" class="stat stat-button" data-stat-filter="overdue" aria-label="Show overdue tasks">
+                <!-- Creates a div element in the page structure. -->
                 <div class="stat-top">
+                    <!-- Creates a span element in the page structure. -->
                     <span>Overdue</span>
+                    <!-- Creates a div element in the page structure. -->
                     <div class="stat-icon red">!</div>
+                <!-- Closes the div element. -->
                 </div>
 
+                <!-- Displays a statistic value updated by JavaScript. -->
                 <div class="stat-number" id="overdueCount">0</div>
+                <!-- Explains the statistic shown in the card. -->
                 <div class="stat-label">Need attention</div>
+            <!-- Closes the button element. -->
             </button>
 
 
+            <!-- Statistic card; its data attribute identifies the task filter. -->
             <button type="button" class="stat stat-button" data-stat-filter="high" aria-label="Show high tasks">
+                <!-- Creates a div element in the page structure. -->
                 <div class="stat-top">
+                    <!-- Creates a span element in the page structure. -->
                     <span>High Priority</span>
+                    <!-- Creates a div element in the page structure. -->
                     <div class="stat-icon red">★</div>
+                <!-- Closes the div element. -->
                 </div>
 
+                <!-- Displays a statistic value updated by JavaScript. -->
                 <div class="stat-number" id="highCount">0</div>
+                <!-- Explains the statistic shown in the card. -->
                 <div class="stat-label">Important tasks</div>
+            <!-- Closes the button element. -->
             </button>
 
+        <!-- Closes the div element. -->
         </div>
 
 
+        <!-- Creates the dashboard content column layout. -->
         <div class="layout">
 
+            <!-- Creates a div element in the page structure. -->
             <div>
 
+                <!-- Creates a div element in the page structure. -->
                 <div class="card">
 
+                    <!-- Groups a card heading and its action. -->
                     <div class="card-head">
 
+                        <!-- Creates a div element in the page structure. -->
                         <div>
+                            <!-- Creates a h2 element in the page structure. -->
                             <h2>Today's Tasks</h2>
 
+                            <!-- Creates a p element in the page structure. -->
                             <p class="muted"
+                               <!-- Text displayed to the user inside the surrounding HTML element. -->
                                style="font-size:13px;margin-top:4px"
+                               <!-- Displays a summary of tasks scheduled for today. -->
                                id="todaySummary">
+                                <!-- Text displayed to the user inside the surrounding HTML element. -->
                                 No tasks for today.
+                            <!-- Closes the p element. -->
                             </p>
+                        <!-- Closes the div element. -->
                         </div>
 
+                        <!-- Creates a button element in the page structure. -->
                         <button class="secondary-btn"
+                                <!-- Calls showPage to navigate to the My Tasks page. -->
                                 onclick="showPage('tasks')">
+                            <!-- Text displayed to the user inside the surrounding HTML element. -->
                             View All
+                        <!-- Closes the button element. -->
                         </button>
 
+                    <!-- Closes the div element. -->
                     </div>
 
+                    <!-- Container where JavaScript renders today’s tasks. -->
                     <div class="task-list" id="todayTasks"></div>
 
+                <!-- Closes the div element. -->
                 </div>
 
 
+                <!-- Creates a div element in the page structure. -->
                 <div class="card" style="margin-top:22px">
 
+                    <!-- Groups a card heading and its action. -->
                     <div class="card-head">
 
+                        <!-- Creates a div element in the page structure. -->
                         <div>
+                            <!-- Creates a h2 element in the page structure. -->
                             <h2>Progress</h2>
 
+                            <!-- Creates a p element in the page structure. -->
                             <p class="muted"
+                               <!-- Text displayed to the user inside the surrounding HTML element. -->
                                style="font-size:13px;margin-top:4px">
+                                <!-- Text displayed to the user inside the surrounding HTML element. -->
                                 Keep moving forward.
+                            <!-- Closes the p element. -->
                             </p>
+                        <!-- Closes the div element. -->
                         </div>
 
+                        <!-- Creates a button element in the page structure. -->
                         <button class="secondary-btn"
+                                <!-- Calls showPage to navigate to the Progress page. -->
                                 onclick="showPage('progress')">
+                            <!-- Text displayed to the user inside the surrounding HTML element. -->
                             Details
+                        <!-- Closes the button element. -->
                         </button>
 
+                    <!-- Closes the div element. -->
                     </div>
 
 
+                    <!-- Groups the progress indicator and its description. -->
                     <div class="progress-wrap">
 
+                        <!-- Circular progress indicator styled using the --progress CSS variable. -->
                         <div class="progress-circle"
+                             <!-- Text displayed to the user inside the surrounding HTML element. -->
                              id="dashboardCircle"
+                             <!-- Text displayed to the user inside the surrounding HTML element. -->
                              style="--progress:0%">
 
+                            <!-- Displays the dashboard completion percentage. -->
                             <span id="dashboardPercent">0%</span>
 
+                        <!-- Closes the div element. -->
                         </div>
 
 
+                        <!-- Creates a div element in the page structure. -->
                         <div class="progress-info">
 
+                            <!-- Creates a strong element in the page structure. -->
                             <strong id="progressMessage">
+                                <!-- Text displayed to the user inside the surrounding HTML element. -->
                                 Start your first task today.
+                            <!-- Closes the strong element. -->
                             </strong>
 
+                            <!-- Background track for the horizontal progress bar. -->
                             <div class="progress-bar">
 
+                                <!-- Progress bar fill; its width represents completion. -->
                                 <div class="progress-fill"
+                                     <!-- Text displayed to the user inside the surrounding HTML element. -->
                                      id="dashboardProgress"
+                                     <!-- Text displayed to the user inside the surrounding HTML element. -->
                                      style="width:0%">
+                                <!-- Closes the div element. -->
                                 </div>
 
+                            <!-- Closes the div element. -->
                             </div>
 
+                            <!-- Creates a small element in the page structure. -->
                             <small class="muted"
+                                   <!-- Displays completed-task and total-task information. -->
                                    id="progressText">
+                                <!-- Text displayed to the user inside the surrounding HTML element. -->
                                 0 of 0 tasks completed
+                            <!-- Closes the small element. -->
                             </small>
 
+                        <!-- Closes the div element. -->
                         </div>
 
+                    <!-- Closes the div element. -->
                     </div>
 
+                <!-- Closes the div element. -->
                 </div>
 
+            <!-- Closes the div element. -->
             </div>
 
 
+            <!-- Creates a div element in the page structure. -->
             <div>
 
+                <!-- Creates a div element in the page structure. -->
                 <div class="card">
 
+                    <!-- Groups a card heading and its action. -->
                     <div class="card-head">
 
+                        <!-- Creates a div element in the page structure. -->
                         <div>
+                            <!-- Creates a h2 element in the page structure. -->
                             <h2>Focus on These</h2>
 
+                            <!-- Creates a p element in the page structure. -->
                             <p class="muted"
+                               <!-- Text displayed to the user inside the surrounding HTML element. -->
                                style="font-size:13px;margin-top:4px">
+                                <!-- Text displayed to the user inside the surrounding HTML element. -->
                                 Your most important tasks.
+                            <!-- Closes the p element. -->
                             </p>
+                        <!-- Closes the div element. -->
                         </div>
 
+                    <!-- Closes the div element. -->
                     </div>
 
+                    <!-- Container for important or high-priority tasks. -->
                     <div class="focus-list" id="focusList"></div>
 
+                <!-- Closes the div element. -->
                 </div>
 
 
+                <!-- Creates a div element in the page structure. -->
                 <div class="card" style="margin-top:22px">
 
+                    <!-- Groups a card heading and its action. -->
                     <div class="card-head">
+                        <!-- Creates a div element in the page structure. -->
                         <div>
+                            <!-- Creates a h2 element in the page structure. -->
                             <h2>Quick Reminder</h2>
+                        <!-- Closes the div element. -->
                         </div>
+                    <!-- Closes the div element. -->
                     </div>
 
+                    <!-- Container for the quick reminder. -->
                     <div id="reminderBox"></div>
 
+                <!-- Closes the div element. -->
                 </div>
 
+            <!-- Closes the div element. -->
             </div>
 
+        <!-- Closes the div element. -->
         </div>
 
+    <!-- Closes the section element. -->
     </section>
 
 
     <!-- TASKS -->
+    <!-- Defines an application page that JavaScript can show or hide. -->
     <section class="page" id="tasksPage">
 
+        <!-- Creates a div element in the page structure. -->
         <div class="card">
 
+            <!-- Groups a card heading and its action. -->
             <div class="card-head">
 
+                <!-- Creates a div element in the page structure. -->
                 <div>
+                    <!-- Creates a h2 element in the page structure. -->
                     <h2>My Tasks</h2>
 
+                    <!-- Creates a p element in the page structure. -->
                     <p class="muted"
+                       <!-- Text displayed to the user inside the surrounding HTML element. -->
                        style="font-size:13px;margin-top:4px">
+                        <!-- Text displayed to the user inside the surrounding HTML element. -->
                         Manage everything in one place.
+                    <!-- Closes the p element. -->
                     </p>
+                <!-- Closes the div element. -->
                 </div>
 
+                <!-- Creates a button element in the page structure. -->
                 <button class="primary-btn"
+                        <!-- Text displayed to the user inside the surrounding HTML element. -->
                         onclick="openAddModal()">
+                    <!-- Text displayed to the user inside the surrounding HTML element. -->
                     ＋ Add Task
+                <!-- Closes the button element. -->
                 </button>
 
+            <!-- Closes the div element. -->
             </div>
 
 
+            <!-- Groups the task search and sorting controls. -->
             <div class="toolbar">
 
+                <!-- Wraps the task search icon and input. -->
                 <div class="search">
 
+                    <!-- Creates a span element in the page structure. -->
                     <span>🔍</span>
 
+                    <!-- Input used to search task records. -->
                     <input id="searchInput"
+                           <!-- Text displayed to the user inside the surrounding HTML element. -->
                            placeholder="Search your tasks...">
 
+                <!-- Closes the div element. -->
                 </div>
 
 
+                <!-- Dropdown for choosing how tasks are sorted. -->
                 <select id="sortSelect">
 
+                    <!-- Defines one option in a dropdown list. -->
                     <option value="newest">
+                        <!-- Text displayed to the user inside the surrounding HTML element. -->
                         Recently Added
+                    <!-- Closes the option element. -->
                     </option>
 
+                    <!-- Defines one option in a dropdown list. -->
                     <option value="priority">
+                        <!-- Text displayed to the user inside the surrounding HTML element. -->
                         Priority
+                    <!-- Closes the option element. -->
                     </option>
 
+                    <!-- Defines one option in a dropdown list. -->
                     <option value="due">
+                        <!-- Text displayed to the user inside the surrounding HTML element. -->
                         Due Date
+                    <!-- Closes the option element. -->
                     </option>
 
+                    <!-- Defines one option in a dropdown list. -->
                     <option value="status">
+                        <!-- Text displayed to the user inside the surrounding HTML element. -->
                         Completed / Pending
+                    <!-- Closes the option element. -->
                     </option>
 
+                <!-- Closes the select element. -->
                 </select>
 
+            <!-- Closes the div element. -->
             </div>
 
 
+            <!-- Container for task filter buttons. -->
             <div class="filters" id="filters">
 
+                <!-- Creates a button element in the page structure. -->
                 <button class="filter-btn active"
+                        <!-- Filter button; data-filter identifies the category to display. -->
                         data-filter="all">
+                    <!-- Text displayed to the user inside the surrounding HTML element. -->
                     All
+                <!-- Closes the button element. -->
                 </button>
 
+                <!-- Creates a button element in the page structure. -->
                 <button class="filter-btn"
+                        <!-- Filter button; data-filter identifies the category to display. -->
                         data-filter="today">
+                    <!-- Text displayed to the user inside the surrounding HTML element. -->
                     Today
+                <!-- Closes the button element. -->
                 </button>
 
+                <!-- Creates a button element in the page structure. -->
                 <button class="filter-btn"
+                        <!-- Filter button; data-filter identifies the category to display. -->
                         data-filter="pending">
+                    <!-- Text displayed to the user inside the surrounding HTML element. -->
                     Pending
+                <!-- Closes the button element. -->
                 </button>
 
+                <!-- Creates a button element in the page structure. -->
                 <button class="filter-btn"
+                        <!-- Filter button; data-filter identifies the category to display. -->
                         data-filter="completed">
+                    <!-- Text displayed to the user inside the surrounding HTML element. -->
                     Completed
+                <!-- Closes the button element. -->
                 </button>
 
+                <!-- Creates a button element in the page structure. -->
                 <button class="filter-btn"
+                        <!-- Filter button; data-filter identifies the category to display. -->
                         data-filter="overdue">
+                    <!-- Text displayed to the user inside the surrounding HTML element. -->
                     Overdue
+                <!-- Closes the button element. -->
                 </button>
 
+                <!-- Creates a button element in the page structure. -->
                 <button class="filter-btn"
+                        <!-- Filter button; data-filter identifies the category to display. -->
                         data-filter="high">
+                    <!-- Text displayed to the user inside the surrounding HTML element. -->
                     High Priority
+                <!-- Closes the button element. -->
                 </button>
 
+            <!-- Closes the div element. -->
             </div>
 
 
+            <!-- Container where JavaScript renders the task list. -->
             <div class="task-list" id="allTasks"></div>
 
+        <!-- Closes the div element. -->
         </div>
 
+    <!-- Closes the section element. -->
     </section>
 
 
     <!-- CALENDAR -->
+    <!-- Defines an application page that JavaScript can show or hide. -->
     <section class="page" id="calendarPage">
 
+        <!-- Creates a div element in the page structure. -->
         <div class="card">
 
+            <!-- Groups calendar month navigation and title. -->
             <div class="calendar-header">
 
+                <!-- Button for moving to the previous calendar month. -->
                 <button id="prevMonth">‹</button>
 
+                <!-- Creates a div element in the page structure. -->
                 <div class="calendar-title"
+                     <!-- Displays the selected month and year. -->
                      id="calendarTitle">
+                <!-- Closes the div element. -->
                 </div>
 
+                <!-- Button for moving to the next calendar month. -->
                 <button id="nextMonth">›</button>
 
+            <!-- Closes the div element. -->
             </div>
 
+            <!-- Creates a div element in the page structure. -->
             <div class="calendar"
+                 <!-- Container where JavaScript builds the calendar grid. -->
                  id="calendarGrid">
+            <!-- Closes the div element. -->
             </div>
 
+        <!-- Closes the div element. -->
         </div>
 
 
+        <!-- Creates a div element in the page structure. -->
         <div class="card" style="margin-top:22px">
 
+            <!-- Groups a card heading and its action. -->
             <div class="card-head">
 
+                <!-- Creates a div element in the page structure. -->
                 <div>
+                    <!-- Displays the currently selected date. -->
                     <h2 id="selectedDateTitle">
+                        <!-- Text displayed to the user inside the surrounding HTML element. -->
                         Tasks
+                    <!-- Closes the h2 element. -->
                     </h2>
+                <!-- Closes the div element. -->
                 </div>
 
+            <!-- Closes the div element. -->
             </div>
 
+            <!-- Creates a div element in the page structure. -->
             <div class="task-list"
+                 <!-- Displays tasks for the selected calendar date. -->
                  id="selectedDateTasks">
+            <!-- Closes the div element. -->
             </div>
 
+        <!-- Closes the div element. -->
         </div>
 
+    <!-- Closes the section element. -->
     </section>
 
 
     <!-- PROGRESS -->
+    <!-- Defines an application page that JavaScript can show or hide. -->
     <section class="page" id="progressPage">
 
+        <!-- Creates a div element in the page structure. -->
         <div class="card">
 
+            <!-- Groups a card heading and its action. -->
             <div class="card-head">
 
+                <!-- Creates a div element in the page structure. -->
                 <div>
 
+                    <!-- Creates a h2 element in the page structure. -->
                     <h2>Your Progress</h2>
 
+                    <!-- Creates a p element in the page structure. -->
                     <p class="muted"
+                       <!-- Text displayed to the user inside the surrounding HTML element. -->
                        style="font-size:13px;margin-top:4px">
+                        <!-- Text displayed to the user inside the surrounding HTML element. -->
                         A simple view of your productivity.
+                    <!-- Closes the p element. -->
                     </p>
 
+                <!-- Closes the div element. -->
                 </div>
 
+            <!-- Closes the div element. -->
             </div>
 
 
+            <!-- Groups the progress indicator and its description. -->
             <div class="progress-wrap">
 
+                <!-- Circular progress indicator styled using the --progress CSS variable. -->
                 <div class="progress-circle"
+                     <!-- Text displayed to the user inside the surrounding HTML element. -->
                      id="progressCircle"
+                     <!-- Text displayed to the user inside the surrounding HTML element. -->
                      style="--progress:0%">
 
+                    <!-- Creates a span element in the page structure. -->
                     <span id="progressPercent">0%</span>
 
+                <!-- Closes the div element. -->
                 </div>
 
 
+                <!-- Creates a div element in the page structure. -->
                 <div class="progress-info">
 
+                    <!-- Creates a h3 element in the page structure. -->
                     <h3 id="progressHeading">
+                        <!-- Text displayed to the user inside the surrounding HTML element. -->
                         Let's get started!
+                    <!-- Closes the h3 element. -->
                     </h3>
 
+                    <!-- Background track for the horizontal progress bar. -->
                     <div class="progress-bar">
 
+                        <!-- Progress bar fill; its width represents completion. -->
                         <div class="progress-fill"
+                             <!-- Text displayed to the user inside the surrounding HTML element. -->
                              id="progressFill"
+                             <!-- Text displayed to the user inside the surrounding HTML element. -->
                              style="width:0%">
+                        <!-- Closes the div element. -->
                         </div>
 
+                    <!-- Closes the div element. -->
                     </div>
 
+                    <!-- Creates a p element in the page structure. -->
                     <p class="muted"
+                       <!-- Text displayed to the user inside the surrounding HTML element. -->
                        id="progressDetail">
+                        <!-- Text displayed to the user inside the surrounding HTML element. -->
                         No tasks yet.
+                    <!-- Closes the p element. -->
                     </p>
 
+                <!-- Closes the div element. -->
                 </div>
 
+            <!-- Closes the div element. -->
             </div>
 
+        <!-- Closes the div element. -->
         </div>
 
 
+        <!-- Creates a div element in the page structure. -->
         <div class="progress-grid"
+             <!-- Text displayed to the user inside the surrounding HTML element. -->
              style="margin-top:22px">
 
+            <!-- Creates a div element in the page structure. -->
             <div class="progress-stat">
+                <!-- Creates a h3 element in the page structure. -->
                 <h3>Completed Today</h3>
+                <!-- Displays the number of tasks completed today. -->
                 <strong id="doneToday">0</strong>
+            <!-- Closes the div element. -->
             </div>
 
+            <!-- Creates a div element in the page structure. -->
             <div class="progress-stat">
+                <!-- Creates a h3 element in the page structure. -->
                 <h3>Completed This Week</h3>
+                <!-- Displays the number of tasks completed this week. -->
                 <strong id="doneWeek">0</strong>
+            <!-- Closes the div element. -->
             </div>
 
+            <!-- Creates a div element in the page structure. -->
             <div class="progress-stat">
+                <!-- Creates a h3 element in the page structure. -->
                 <h3>Total Completed</h3>
+                <!-- Displays the total number of completed tasks. -->
                 <strong id="doneTotal">0</strong>
+            <!-- Closes the div element. -->
             </div>
 
+            <!-- Creates a div element in the page structure. -->
             <div class="progress-stat">
+                <!-- Creates a h3 element in the page structure. -->
                 <h3>Remaining Tasks</h3>
+                <!-- Displays the number of tasks still remaining. -->
                 <strong id="remainingTotal">0</strong>
+            <!-- Closes the div element. -->
             </div>
 
+        <!-- Closes the div element. -->
         </div>
 
+    <!-- Closes the section element. -->
     </section>
 
 
     <!-- SETTINGS -->
+    <!-- Defines an application page that JavaScript can show or hide. -->
     <section class="page" id="settingsPage">
 
+        <!-- Creates a div element in the page structure. -->
         <div class="card">
 
+            <!-- Groups a card heading and its action. -->
             <div class="card-head">
 
+                <!-- Creates a div element in the page structure. -->
                 <div>
 
+                    <!-- Creates a h2 element in the page structure. -->
                     <h2>Settings</h2>
 
+                    <!-- Creates a p element in the page structure. -->
                     <p class="muted"
+                       <!-- Text displayed to the user inside the surrounding HTML element. -->
                        style="font-size:13px;margin-top:4px">
+                        <!-- Text displayed to the user inside the surrounding HTML element. -->
                         Keep your task experience simple.
+                    <!-- Closes the p element. -->
                     </p>
 
+                <!-- Closes the div element. -->
                 </div>
 
+            <!-- Closes the div element. -->
             </div>
 
 
+            <!-- Groups a setting description and its control. -->
             <div class="setting-row">
 
+                <!-- Creates a div element in the page structure. -->
                 <div>
 
+                    <!-- Creates a strong element in the page structure. -->
                     <strong>Daily reminders</strong>
 
+                    <!-- Creates a p element in the page structure. -->
                     <p class="muted"
+                       <!-- Text displayed to the user inside the surrounding HTML element. -->
                        style="font-size:13px;margin-top:4px">
+                        <!-- Text displayed to the user inside the surrounding HTML element. -->
                         Show visual reminders for today's tasks.
+                    <!-- Closes the p element. -->
                     </p>
 
+                <!-- Closes the div element. -->
                 </div>
 
+                <!-- Creates a button element in the page structure. -->
                 <button class="toggle on"
+                        <!-- Toggle for enabling or disabling daily visual reminders. -->
                         id="reminderToggle">
 
+                    <!-- Creates a span element in the page structure. -->
                     <span></span>
 
+                <!-- Closes the button element. -->
                 </button>
 
+            <!-- Closes the div element. -->
             </div>
 
 
+            <!-- Groups a setting description and its control. -->
             <div class="setting-row">
 
+                <!-- Creates a div element in the page structure. -->
                 <div>
 
+                    <!-- Creates a strong element in the page structure. -->
                     <strong>Clear all tasks</strong>
 
+                    <!-- Creates a p element in the page structure. -->
                     <p class="muted"
+                       <!-- Text displayed to the user inside the surrounding HTML element. -->
                        style="font-size:13px;margin-top:4px">
+                        <!-- Text displayed to the user inside the surrounding HTML element. -->
                         Remove all saved tasks from this browser.
+                    <!-- Closes the p element. -->
                     </p>
 
+                <!-- Closes the div element. -->
                 </div>
 
+                <!-- Creates a button element in the page structure. -->
                 <button class="secondary-btn"
+                        <!-- Button that starts the clear-all-tasks action. -->
                         id="clearAllBtn">
+                    <!-- Text displayed to the user inside the surrounding HTML element. -->
                     Clear All
+                <!-- Closes the button element. -->
                 </button>
 
+            <!-- Closes the div element. -->
             </div>
 
+        <!-- Closes the div element. -->
         </div>
 
 
+        <!-- Creates a div element in the page structure. -->
         <div class="card" style="margin-top:22px">
 
+            <!-- Creates a h2 element in the page structure. -->
             <h2 style="margin-bottom:10px">
+                <!-- Heading for the project information section. -->
                 About this project
+            <!-- Closes the h2 element. -->
             </h2>
 
+            <!-- Creates a p element in the page structure. -->
             <p class="muted" style="line-height:1.7">
 
+                <!-- Text displayed to the user inside the surrounding HTML element. -->
                 Smart To-Do List & Task Management System is a B.Tech CSE PBL project focused on making task management simple and clear.
 
+                <!-- Text displayed to the user inside the surrounding HTML element. -->
                 The planned academic implementation uses C++, OOP, Linked List, Stack, Queue, Priority Queue, Searching and Sorting.
 
+            <!-- Closes the p element. -->
             </p>
 
+        <!-- Closes the div element. -->
         </div>
 
+    <!-- Closes the section element. -->
     </section>
 
+<!-- Closes the main element. -->
 </main>
 
+<!-- Closes the div element. -->
 </div>
 
 
 <!-- MOBILE NAVIGATION -->
+<!-- Navigation bar designed for mobile screens. -->
 <div class="mobile-nav">
 
+    <!-- Creates a button element in the page structure. -->
     <button class="active"
+            <!-- Navigation button; data-page identifies which page should be shown. -->
             data-page="dashboard">
+        <!-- Text displayed to the user inside the surrounding HTML element. -->
         🏠
+        <!-- Creates a span element in the page structure. -->
         <span>Home</span>
+    <!-- Closes the button element. -->
     </button>
 
+    <!-- Navigation button; data-page identifies which page should be shown. -->
     <button data-page="tasks">
+        <!-- Text displayed to the user inside the surrounding HTML element. -->
         📋
+        <!-- Creates a span element in the page structure. -->
         <span>Tasks</span>
+    <!-- Closes the button element. -->
     </button>
 
+    <!-- Navigation button; data-page identifies which page should be shown. -->
     <button data-page="calendar">
+        <!-- Text displayed to the user inside the surrounding HTML element. -->
         📅
+        <!-- Creates a span element in the page structure. -->
         <span>Calendar</span>
+    <!-- Closes the button element. -->
     </button>
 
+    <!-- Navigation button; data-page identifies which page should be shown. -->
     <button data-page="progress">
+        <!-- Text displayed to the user inside the surrounding HTML element. -->
         📊
+        <!-- Creates a span element in the page structure. -->
         <span>Progress</span>
+    <!-- Closes the button element. -->
     </button>
 
+<!-- Closes the div element. -->
 </div>
 
 
 <!-- MODAL -->
+<!-- Creates a div element in the page structure. -->
 <div class="modal-backdrop"
+     <!-- Backdrop behind the add/edit task modal. -->
      id="modalBackdrop">
 
+    <!-- Popup panel containing a form or pending-task content. -->
     <div class="modal">
 
+        <!-- Creates a div element in the page structure. -->
         <div class="modal-head">
 
+            <!-- Modal heading that can change between add and edit modes. -->
             <h2 id="modalTitle">
+                <!-- Text displayed to the user inside the surrounding HTML element. -->
                 Add New Task
+            <!-- Closes the h2 element. -->
             </h2>
 
+            <!-- Creates a button element in the page structure. -->
             <button class="close"
+                    <!-- Button for closing the add/edit task modal. -->
                     id="closeModal">
+                <!-- Text displayed to the user inside the surrounding HTML element. -->
                 ×
+            <!-- Closes the button element. -->
             </button>
 
+        <!-- Closes the div element. -->
         </div>
 
 
+        <!-- Hidden area for displaying due-date validation messages. -->
         <div id="dateValidation" class="validation-banner" role="alert" hidden></div>
+        <!-- Form used to create or edit a task. -->
         <form id="taskForm">
 
+            <!-- Creates a input element in the page structure. -->
             <input type="hidden"
+                   <!-- Hidden field that stores the ID of the task being edited. -->
                    id="editId">
 
+            <!-- Arranges task form fields in a grid. -->
             <div class="form-grid">
 
+                <!-- Creates a div element in the page structure. -->
                 <div class="form-group full">
 
+                    <!-- Label describing the related form input. -->
                     <label for="taskTitle">
+                        <!-- Text displayed to the user inside the surrounding HTML element. -->
                         Task Title *
+                    <!-- Closes the label element. -->
                     </label>
 
+                    <!-- Required input for the task title, limited to 100 characters. -->
                     <input id="taskTitle"
+                           <!-- Text displayed to the user inside the surrounding HTML element. -->
                            required
+                           <!-- Text displayed to the user inside the surrounding HTML element. -->
                            maxlength="100"
+                           <!-- Text displayed to the user inside the surrounding HTML element. -->
                            placeholder="e.g. Complete PBL Documentation">
 
+                <!-- Closes the div element. -->
                 </div>
 
 
+                <!-- Creates a div element in the page structure. -->
                 <div class="form-group full">
 
+                    <!-- Label describing the related form input. -->
                     <label for="taskDescription">
+                        <!-- Text displayed to the user inside the surrounding HTML element. -->
                         Description
+                    <!-- Closes the label element. -->
                     </label>
 
+                    <!-- Optional task description field, limited to 500 characters. -->
                     <textarea id="taskDescription"
+                              <!-- Text displayed to the user inside the surrounding HTML element. -->
                               maxlength="500"
+                              <!-- Text displayed to the user inside the surrounding HTML element. -->
                               placeholder="What needs to be done?"></textarea>
 
+                <!-- Closes the div element. -->
                 </div>
 
 
+                <!-- Creates a div element in the page structure. -->
                 <div class="form-group">
 
+                    <!-- Label describing the related form input. -->
                     <label for="taskPriority">
+                        <!-- Text displayed to the user inside the surrounding HTML element. -->
                         Priority
+                    <!-- Closes the label element. -->
                     </label>
 
+                    <!-- Dropdown for selecting high, medium or low priority. -->
                     <select id="taskPriority">
 
+                        <!-- Defines one option in a dropdown list. -->
                         <option value="high">
+                            <!-- Text displayed to the user inside the surrounding HTML element. -->
                             High
+                        <!-- Closes the option element. -->
                         </option>
 
+                        <!-- Defines one option in a dropdown list. -->
                         <option value="medium"
+                                <!-- Text displayed to the user inside the surrounding HTML element. -->
                                 selected>
+                            <!-- Text displayed to the user inside the surrounding HTML element. -->
                             Medium
+                        <!-- Closes the option element. -->
                         </option>
 
+                        <!-- Defines one option in a dropdown list. -->
                         <option value="low">
+                            <!-- Text displayed to the user inside the surrounding HTML element. -->
                             Low
+                        <!-- Closes the option element. -->
                         </option>
 
+                    <!-- Closes the select element. -->
                     </select>
 
+                <!-- Closes the div element. -->
                 </div>
 
 
+                <!-- Creates a div element in the page structure. -->
                 <div class="form-group">
 
+                    <!-- Label describing the related form input. -->
                     <label for="taskDate">
+                        <!-- Text displayed to the user inside the surrounding HTML element. -->
                         Due Date *
+                    <!-- Closes the label element. -->
                     </label>
 
+                    <!-- Creates a input element in the page structure. -->
                     <input type="date"
+                           <!-- Required date input for the task due date. -->
                            id="taskDate"
+                           <!-- Text displayed to the user inside the surrounding HTML element. -->
                            required>
 
+                <!-- Closes the div element. -->
                 </div>
 
 
+                <!-- Creates a div element in the page structure. -->
                 <div class="form-group">
 
+                    <!-- Label describing the related form input. -->
                     <label for="taskCategory">
+                        <!-- Text displayed to the user inside the surrounding HTML element. -->
                         Category
+                    <!-- Closes the label element. -->
                     </label>
 
+                    <!-- Optional input for a task category. -->
                     <input id="taskCategory"
+                           <!-- Text displayed to the user inside the surrounding HTML element. -->
                            maxlength="40"
+                           <!-- Text displayed to the user inside the surrounding HTML element. -->
                            placeholder="e.g. College">
 
+                <!-- Closes the div element. -->
                 </div>
 
 
 
+            <!-- Closes the div element. -->
             </div>
 
 
+            <!-- Groups the Cancel and Save buttons. -->
             <div class="form-actions">
 
+                <!-- Creates a button element in the page structure. -->
                 <button type="button"
+                        <!-- Text displayed to the user inside the surrounding HTML element. -->
                         class="secondary-btn"
+                        <!-- Button for cancelling and closing the task form. -->
                         id="cancelModal">
+                    <!-- Text displayed to the user inside the surrounding HTML element. -->
                     Cancel
+                <!-- Closes the button element. -->
                 </button>
 
+                <!-- Creates a button element in the page structure. -->
                 <button type="submit"
+                        <!-- Text displayed to the user inside the surrounding HTML element. -->
                         class="primary-btn"
+                        <!-- Submit button for saving the task form. -->
                         id="saveTaskBtn">
+                    <!-- Text displayed to the user inside the surrounding HTML element. -->
                     Add Task
+                <!-- Closes the button element. -->
                 </button>
 
+            <!-- Closes the div element. -->
             </div>
 
+        <!-- Closes the form element. -->
         </form>
 
+    <!-- Closes the div element. -->
     </div>
 
+<!-- Closes the div element. -->
 </div>
 
 
 <!-- PENDING TASKS MODAL -->
+<!-- Backdrop behind the pending-tasks modal. -->
 <div class="modal-backdrop" id="pendingBackdrop">
+    <!-- Creates a div element in the page structure. -->
     <div class="modal pending-modal" role="dialog" aria-modal="true" aria-labelledby="pendingTitle">
+        <!-- Creates a div element in the page structure. -->
         <div class="modal-head">
+            <!-- Heading for the pending-tasks dialog. -->
             <div><span class="eyebrow">YOUR NEXT STEPS</span><h2 id="pendingTitle">Pending tasks</h2></div>
+            <!-- Button for closing the pending-tasks dialog. -->
             <button class="close" id="closePending" aria-label="Close pending tasks">×</button>
+        <!-- Closes the div element. -->
         </div>
+        <!-- Creates a p element in the page structure. -->
         <p class="muted pending-intro">A quick look at what still needs your attention.</p>
+        <!-- Container where pending task items are rendered. -->
         <div class="task-list" id="pendingTasksList"></div>
+    <!-- Closes the div element. -->
     </div>
+<!-- Closes the div element. -->
 </div>
 
 <!-- TOAST -->
+<!-- Toast notification container for short feedback messages. -->
 <div class="toast"
+     <!-- Text displayed to the user inside the surrounding HTML element. -->
      id="toast">
 
+    <!-- Displays the toast notification message. -->
     <span id="toastText"></span>
 
+    <!-- Undo button that can reverse a supported action. -->
     <button id="undoBtn"
+            <!-- Text displayed to the user inside the surrounding HTML element. -->
             style="display:none">
+        <!-- Text displayed to the user inside the surrounding HTML element. -->
         UNDO
+    <!-- Closes the button element. -->
     </button>
 
+<!-- Closes the div element. -->
 </div>
 
 
+<!-- Loads the Supabase JavaScript client library from a CDN. -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<!-- Loads the Supabase project URL and public key configuration. -->
 <script src="config.js"></script>
+<!-- Loads the main application logic and task interactions. -->
 <script src="script.js"></script>
+<!-- Loads the database layer for task and session operations. -->
 <script src="localdb.js"></script>
+<!-- Loads login, signup, session restoration and logout logic. -->
 <script src="auth.js"></script>
 
+<!-- Closes the body element. -->
 </body>
+<!-- Closes the root HTML document. -->
 </html>
