@@ -881,6 +881,17 @@
             </div>
 
 
+            <!-- Browser notification permission for task due times. -->
+            <div class="setting-row">
+                <div>
+                    <strong>Task time notifications</strong>
+                    <p class="muted" style="font-size:13px;margin-top:4px">
+                        Get a pop-up when a task's due time arrives (works while SmartTask is open in your browser).
+                    </p>
+                </div>
+                <button class="secondary-btn" id="notifyBtn" type="button">Enable</button>
+            </div>
+
             <!-- Groups a setting description and its control. -->
             <div class="setting-row">
 
@@ -1154,6 +1165,12 @@
                     <input id="taskCategory" maxlength="40" placeholder="e.g. College">
 
                 <!-- Closes the div element. -->
+                </div>
+
+                <!-- Optional due time: a notification is shown when this time arrives. -->
+                <div class="form-group">
+                    <label for="taskTime">Due Time (optional)</label>
+                    <input type="time" id="taskTime">
                 </div>
 
 
