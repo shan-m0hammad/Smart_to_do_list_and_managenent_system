@@ -7,7 +7,7 @@
     display: flex; /* Uses Flexbox for arranging child elements */
     align-items: center; /* Vertically centers the authentication card */
     justify-content: center; /* Horizontally centers the authentication card */
-    background: rgba(15,23,42,.72); /* Adds a dark transparent background */
+    background: rgba(15,23,42,.72); /* Adds a dark transparent background  */
     backdrop-filter: blur(6px); /* Blurs the content behind the overlay */
     padding: 16px; /* Adds spacing around the overlay content */
 }
