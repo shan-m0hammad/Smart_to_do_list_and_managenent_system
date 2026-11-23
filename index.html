@@ -1,626 +1,797 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smart To-Do List & Task Management System</title>
 
-    <!-- Mobile responsive banane ke liye -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Smart To-Do List | DSA PBL</title>
-
-    <!-- CSS file connect -->
-    <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="auth.css">
 </head>
 
 <body>
 
-    <!-- ================= HEADER ================= -->
+<div class="app">
+
+<aside class="sidebar" id="sidebar">
+    <div class="logo">
+        <div class="logo-icon">✓</div>
+        <h2>Smart<span>Task</span></h2>
+    </div>
+
+    <nav class="nav">
+        <button class="active" data-page="dashboard">
+            <span class="nav-icon">🏠</span>Dashboard
+        </button>
+
+        <button data-page="tasks">
+            <span class="nav-icon">📋</span>My Tasks
+        </button>
+
+        <button data-page="calendar">
+            <span class="nav-icon">📅</span>Calendar
+        </button>
+
+        <button data-page="progress">
+            <span class="nav-icon">📊</span>Progress
+        </button>
+
+        <button data-page="settings">
+            <span class="nav-icon">⚙️</span>Settings
+        </button>
+    </nav>
+</aside>
+
+<main class="main">
+
     <header class="topbar">
+        <div style="display:flex;gap:12px;align-items:flex-start">
 
-        <!-- Website name and project information -->
-        <div class="brand">
+            <button class="mobile-menu" id="menuBtn">☰</button>
 
-            <div class="brand-mark">✓</div>
-
-            <div>
-                <h1>Smart To-Do</h1>
-                <p>Task Management System • C / C++ • DSA PBL</p>
+            <div class="greeting">
+                <h1 id="pageTitle">Hey ! 👋</h1>
+                <p id="pageSubtitle">
+                    Here is what needs your attention today.
+                </p>
             </div>
 
         </div>
 
-        <!-- Project status -->
-        <div class="status">
-            <span></span>
-            Local Project
+        <div class="top-actions">
+            <button class="icon-btn notification-btn" id="notificationBtn" aria-label="Show pending tasks" title="Pending tasks">
+                ♧ <span class="notification-count" id="notificationCount">0</span>
+            </button>
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle theme">
+                <span id="themeIcon">☾</span><span class="theme-toggle-label">Dark mode</span>
+            </button>
+            <button class="primary-btn" id="addTaskBtn">＋ Add Task</button>
         </div>
-
     </header>
 
 
-    <!-- ================= MAIN CONTENT ================= -->
-    <main>
+    <!-- DASHBOARD -->
+    <section class="page active" id="dashboardPage">
 
-        <!-- ================= HERO SECTION ================= -->
-        <section class="hero">
+        <section class="quote-banner glass-panel" aria-live="polite">
+            <div class="quote-mark">“</div>
+            <div class="quote-content">
+                <span class="eyebrow">A LITTLE DAILY MOMENTUM</span>
+                <p id="dailyQuote" class="quote-text">Great things are done by a series of small things brought together.</p>
+                <span id="quoteAuthor" class="quote-author">— Vincent van Gogh</span>
+            </div>
+            <button class="quote-refresh" id="refreshQuote" aria-label="Refresh motivational quote" title="New quote">↻</button>
+        </section>
+        <button class="due-alert" id="dueTodayAlert" hidden>
+            <span class="alert-symbol">◷</span><span id="dueTodayText">You have tasks due today.</span><span class="alert-arrow">→</span>
+        </button>
+
+        <div class="stats">
+
+            <button type="button" class="stat stat-button" data-stat-filter="all" aria-label="Show all tasks">
+                <div class="stat-top">
+                    <span>Total Tasks</span>
+                    <div class="stat-icon blue">📋</div>
+                </div>
+
+                <div class="stat-number" id="totalCount">0</div>
+                <div class="stat-label">All your tasks</div>
+            </button>
+
+
+            <button type="button" class="stat stat-button" data-stat-filter="pending" aria-label="Show pending tasks">
+                <div class="stat-top">
+                    <span>Pending</span>
+                    <div class="stat-icon yellow">⏳</div>
+                </div>
+
+                <div class="stat-number" id="pendingCount">0</div>
+                <div class="stat-label">Need your attention</div>
+            </button>
+
+
+            <button type="button" class="stat stat-button" data-stat-filter="completed" aria-label="Show completed tasks">
+                <div class="stat-top">
+                    <span>Completed</span>
+                    <div class="stat-icon green">✓</div>
+                </div>
+
+                <div class="stat-number" id="completedCount">0</div>
+                <div class="stat-label">Tasks finished</div>
+            </button>
+
+
+            <button type="button" class="stat stat-button" data-stat-filter="overdue" aria-label="Show overdue tasks">
+                <div class="stat-top">
+                    <span>Overdue</span>
+                    <div class="stat-icon red">!</div>
+                </div>
+
+                <div class="stat-number" id="overdueCount">0</div>
+                <div class="stat-label">Need attention</div>
+            </button>
+
+
+            <button type="button" class="stat stat-button" data-stat-filter="high" aria-label="Show high tasks">
+                <div class="stat-top">
+                    <span>High Priority</span>
+                    <div class="stat-icon red">★</div>
+                </div>
+
+                <div class="stat-number" id="highCount">0</div>
+                <div class="stat-label">Important tasks</div>
+            </button>
+
+        </div>
+
+
+        <div class="layout">
 
             <div>
 
-                <div class="eyebrow">
-                    SMART TASK MANAGEMENT SYSTEM
-                </div>
+                <div class="card">
 
-                <h2>
-                    Plan. Prioritize.<br>
-                    <b>Get it done.</b>
-                </h2>
+                    <div class="card-head">
 
-                <p>
-                    A simple task manager designed around the PBL
-                    requirements: task operations, searching, sorting,
-                    priority handling, undo, queues and file storage.
-                </p>
+                        <div>
+                            <h2>Today's Tasks</h2>
 
-            </div>
+                            <p class="muted"
+                               style="font-size:13px;margin-top:4px"
+                               id="todaySummary">
+                                No tasks for today.
+                            </p>
+                        </div>
 
-            <!-- DSA information -->
-            <div class="hero-dsa">
-                <strong>DSA</strong>
-                <small>Built around C/C++ concepts</small>
-            </div>
+                        <button class="secondary-btn"
+                                onclick="showPage('tasks')">
+                            View All
+                        </button>
 
-        </section>
-
-
-        <!-- ================= TASK STATISTICS ================= -->
-        <section class="stats">
-
-            <!-- Total tasks -->
-            <div class="stat">
-                <div class="icon blue">◈</div>
-
-                <div>
-                    <strong id="totalTasks">0</strong>
-                    <small>Total Tasks</small>
-                </div>
-            </div>
-
-
-            <!-- Pending tasks -->
-            <div class="stat">
-                <div class="icon orange">◷</div>
-
-                <div>
-                    <strong id="pendingTasks">0</strong>
-                    <small>Pending</small>
-                </div>
-            </div>
-
-
-            <!-- Completed tasks -->
-            <div class="stat">
-                <div class="icon green">✓</div>
-
-                <div>
-                    <strong id="completedTasks">0</strong>
-                    <small>Completed</small>
-                </div>
-            </div>
-
-
-            <!-- High priority tasks -->
-            <div class="stat">
-                <div class="icon red">!</div>
-
-                <div>
-                    <strong id="highTasks">0</strong>
-                    <small>High Priority</small>
-                </div>
-            </div>
-
-        </section>
-
-
-        <!-- ================= ADD TASK SECTION ================= -->
-        <section class="panel">
-
-            <div class="panel-head">
-
-                <div>
-
-                    <div class="eyebrow">
-                        CREATE
                     </div>
 
-                    <h2 id="formHeading">
-                        Add a new task
-                    </h2>
-
-                    <p>
-                        Task ID is generated automatically.
-                        Add the details used in the project proposal.
-                    </p>
-
-                   <p>
-    (Marked with " <b style="color: red !important;">*</b> " need to fill)
-</p>
+                    <div class="task-list" id="todayTasks"></div>
 
                 </div>
 
-                <div class="plus">+</div>
+
+                <div class="card" style="margin-top:22px">
+
+                    <div class="card-head">
+
+                        <div>
+                            <h2>Progress</h2>
+
+                            <p class="muted"
+                               style="font-size:13px;margin-top:4px">
+                                Keep moving forward.
+                            </p>
+                        </div>
+
+                        <button class="secondary-btn"
+                                onclick="showPage('progress')">
+                            Details
+                        </button>
+
+                    </div>
+
+
+                    <div class="progress-wrap">
+
+                        <div class="progress-circle"
+                             id="dashboardCircle"
+                             style="--progress:0%">
+
+                            <span id="dashboardPercent">0%</span>
+
+                        </div>
+
+
+                        <div class="progress-info">
+
+                            <strong id="progressMessage">
+                                Start your first task today.
+                            </strong>
+
+                            <div class="progress-bar">
+
+                                <div class="progress-fill"
+                                     id="dashboardProgress"
+                                     style="width:0%">
+                                </div>
+
+                            </div>
+
+                            <small class="muted"
+                                   id="progressText">
+                                0 of 0 tasks completed
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                </div>
 
             </div>
 
 
-            <!-- Task input fields -->
+            <div>
+
+                <div class="card">
+
+                    <div class="card-head">
+
+                        <div>
+                            <h2>Focus on These</h2>
+
+                            <p class="muted"
+                               style="font-size:13px;margin-top:4px">
+                                Your most important tasks.
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <div class="focus-list" id="focusList"></div>
+
+                </div>
+
+
+                <div class="card" style="margin-top:22px">
+
+                    <div class="card-head">
+                        <div>
+                            <h2>Quick Reminder</h2>
+                        </div>
+                    </div>
+
+                    <div id="reminderBox"></div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- TASKS -->
+    <section class="page" id="tasksPage">
+
+        <div class="card">
+
+            <div class="card-head">
+
+                <div>
+                    <h2>My Tasks</h2>
+
+                    <p class="muted"
+                       style="font-size:13px;margin-top:4px">
+                        Manage everything in one place.
+                    </p>
+                </div>
+
+                <button class="primary-btn"
+                        onclick="openAddModal()">
+                    ＋ Add Task
+                </button>
+
+            </div>
+
+
+            <div class="toolbar">
+
+                <div class="search">
+
+                    <span>🔍</span>
+
+                    <input id="searchInput"
+                           placeholder="Search your tasks...">
+
+                </div>
+
+
+                <select id="sortSelect">
+
+                    <option value="newest">
+                        Recently Added
+                    </option>
+
+                    <option value="priority">
+                        Priority
+                    </option>
+
+                    <option value="due">
+                        Due Date
+                    </option>
+
+                    <option value="status">
+                        Completed / Pending
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="filters" id="filters">
+
+                <button class="filter-btn active"
+                        data-filter="all">
+                    All
+                </button>
+
+                <button class="filter-btn"
+                        data-filter="today">
+                    Today
+                </button>
+
+                <button class="filter-btn"
+                        data-filter="pending">
+                    Pending
+                </button>
+
+                <button class="filter-btn"
+                        data-filter="completed">
+                    Completed
+                </button>
+
+                <button class="filter-btn"
+                        data-filter="overdue">
+                    Overdue
+                </button>
+
+                <button class="filter-btn"
+                        data-filter="high">
+                    High Priority
+                </button>
+
+            </div>
+
+
+            <div class="task-list" id="allTasks"></div>
+
+        </div>
+
+    </section>
+
+
+    <!-- CALENDAR -->
+    <section class="page" id="calendarPage">
+
+        <div class="card">
+
+            <div class="calendar-header">
+
+                <button id="prevMonth">‹</button>
+
+                <div class="calendar-title"
+                     id="calendarTitle">
+                </div>
+
+                <button id="nextMonth">›</button>
+
+            </div>
+
+            <div class="calendar"
+                 id="calendarGrid">
+            </div>
+
+        </div>
+
+
+        <div class="card" style="margin-top:22px">
+
+            <div class="card-head">
+
+                <div>
+                    <h2 id="selectedDateTitle">
+                        Tasks
+                    </h2>
+                </div>
+
+            </div>
+
+            <div class="task-list"
+                 id="selectedDateTasks">
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- PROGRESS -->
+    <section class="page" id="progressPage">
+
+        <div class="card">
+
+            <div class="card-head">
+
+                <div>
+
+                    <h2>Your Progress</h2>
+
+                    <p class="muted"
+                       style="font-size:13px;margin-top:4px">
+                        A simple view of your productivity.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="progress-wrap">
+
+                <div class="progress-circle"
+                     id="progressCircle"
+                     style="--progress:0%">
+
+                    <span id="progressPercent">0%</span>
+
+                </div>
+
+
+                <div class="progress-info">
+
+                    <h3 id="progressHeading">
+                        Let's get started!
+                    </h3>
+
+                    <div class="progress-bar">
+
+                        <div class="progress-fill"
+                             id="progressFill"
+                             style="width:0%">
+                        </div>
+
+                    </div>
+
+                    <p class="muted"
+                       id="progressDetail">
+                        No tasks yet.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="progress-grid"
+             style="margin-top:22px">
+
+            <div class="progress-stat">
+                <h3>Completed Today</h3>
+                <strong id="doneToday">0</strong>
+            </div>
+
+            <div class="progress-stat">
+                <h3>Completed This Week</h3>
+                <strong id="doneWeek">0</strong>
+            </div>
+
+            <div class="progress-stat">
+                <h3>Total Completed</h3>
+                <strong id="doneTotal">0</strong>
+            </div>
+
+            <div class="progress-stat">
+                <h3>Remaining Tasks</h3>
+                <strong id="remainingTotal">0</strong>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- SETTINGS -->
+    <section class="page" id="settingsPage">
+
+        <div class="card">
+
+            <div class="card-head">
+
+                <div>
+
+                    <h2>Settings</h2>
+
+                    <p class="muted"
+                       style="font-size:13px;margin-top:4px">
+                        Keep your task experience simple.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="setting-row">
+
+                <div>
+
+                    <strong>Daily reminders</strong>
+
+                    <p class="muted"
+                       style="font-size:13px;margin-top:4px">
+                        Show visual reminders for today's tasks.
+                    </p>
+
+                </div>
+
+                <button class="toggle on"
+                        id="reminderToggle">
+
+                    <span></span>
+
+                </button>
+
+            </div>
+
+
+            <div class="setting-row">
+
+                <div>
+
+                    <strong>Clear all tasks</strong>
+
+                    <p class="muted"
+                       style="font-size:13px;margin-top:4px">
+                        Remove all saved tasks from this browser.
+                    </p>
+
+                </div>
+
+                <button class="secondary-btn"
+                        id="clearAllBtn">
+                    Clear All
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div class="card" style="margin-top:22px">
+
+            <h2 style="margin-bottom:10px">
+                About this project
+            </h2>
+
+            <p class="muted" style="line-height:1.7">
+
+                Smart To-Do List & Task Management System is a B.Tech CSE PBL project focused on making task management simple and clear.
+
+                The planned academic implementation uses C++, OOP, Linked List, Stack, Queue, Priority Queue, Searching and Sorting.
+
+            </p>
+
+        </div>
+
+    </section>
+
+</main>
+
+</div>
+
+
+<!-- MOBILE NAVIGATION -->
+<div class="mobile-nav">
+
+    <button class="active"
+            data-page="dashboard">
+        🏠
+        <span>Home</span>
+    </button>
+
+    <button data-page="tasks">
+        📋
+        <span>Tasks</span>
+    </button>
+
+    <button data-page="calendar">
+        📅
+        <span>Calendar</span>
+    </button>
+
+    <button data-page="progress">
+        📊
+        <span>Progress</span>
+    </button>
+
+</div>
+
+
+<!-- MODAL -->
+<div class="modal-backdrop"
+     id="modalBackdrop">
+
+    <div class="modal">
+
+        <div class="modal-head">
+
+            <h2 id="modalTitle">
+                Add New Task
+            </h2>
+
+            <button class="close"
+                    id="closeModal">
+                ×
+            </button>
+
+        </div>
+
+
+        <div id="dateValidation" class="validation-banner" role="alert" hidden></div>
+        <form id="taskForm">
+
+            <input type="hidden"
+                   id="editId">
+
             <div class="form-grid">
 
-                <!-- Task title -->
-                <label>
-                    <span>Task title <b style="color: red !important;">*</b></span>
-                    <input
-                        id="taskTitle"
-                        placeholder="e.g. Complete DSA assignment"
-                    >
-                </label>
+                <div class="form-group full">
+
+                    <label for="taskTitle">
+                        Task Title *
+                    </label>
+
+                    <input id="taskTitle"
+                           required
+                           maxlength="100"
+                           placeholder="e.g. Complete PBL Documentation">
+
+                </div>
 
 
-                <!-- Task category -->
-                <label>
-                    <span>Category <b style="color: red !important;">*</b></span>
-                    <input
-                        id="taskCategory"
-                        placeholder="College / PBL / Personal"
-                    >
-                </label>
+                <div class="form-group full">
+
+                    <label for="taskDescription">
+                        Description
+                    </label>
+
+                    <textarea id="taskDescription"
+                              maxlength="500"
+                              placeholder="What needs to be done?"></textarea>
+
+                </div>
 
 
-                <!-- Deadline -->
-                <label>
-                    <span>Deadline <b style="color: red !important;">*</b></span>
-                    <input type="date" id="taskDeadline" min="">
-                </label>
+                <div class="form-group">
 
-
-                <!-- Priority -->
-                <label>
-                    <span>Priority <b style="color: red !important;">*</b></span>
+                    <label for="taskPriority">
+                        Priority
+                    </label>
 
                     <select id="taskPriority">
 
-                        <option value="3">
+                        <option value="high">
                             High
                         </option>
 
-                        <option value="2" selected>
+                        <option value="medium"
+                                selected>
                             Medium
                         </option>
 
-                        <option value="1">
+                        <option value="low">
                             Low
                         </option>
 
                     </select>
-                </label>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="taskDate">
+                        Due Date *
+                    </label>
+
+                    <input type="date"
+                           id="taskDate"
+                           required>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="taskCategory">
+                        Category
+                    </label>
+
+                    <input id="taskCategory"
+                           maxlength="40"
+                           placeholder="e.g. College">
+
+                </div>
+
+
 
             </div>
 
 
-            <!-- Optional task description -->
-            <label class="description">
-
-                <span>
-                    Description (Optional)
-                </span>
-
-                <textarea
-                    id="taskDescription"
-                    placeholder="Short description of the task"
-                ></textarea>
-
-            </label>
-
-
-            <!-- Add and Clear buttons -->
             <div class="form-actions">
 
-                <button
-                    class="primary"
-                    id="saveTask"
-                >
-                    + Add Task
+                <button type="button"
+                        class="secondary-btn"
+                        id="cancelModal">
+                    Cancel
                 </button>
 
-                <button
-                    class="secondary"
-                    id="clearForm"
-                >
-                    Clear
+                <button type="submit"
+                        class="primary-btn"
+                        id="saveTaskBtn">
+                    Add Task
                 </button>
 
             </div>
 
+        </form>
 
-            <!-- Success / error message -->
-            <div
-                id="message"
-                class="message"
-            ></div>
+    </div>
 
-        </section>
+</div>
 
 
-        <!-- ================= SEARCH AND TOOLS ================= -->
-        <section class="toolbar">
+<!-- PENDING TASKS MODAL -->
+<div class="modal-backdrop" id="pendingBackdrop">
+    <div class="modal pending-modal" role="dialog" aria-modal="true" aria-labelledby="pendingTitle">
+        <div class="modal-head">
+            <div><span class="eyebrow">YOUR NEXT STEPS</span><h2 id="pendingTitle">Pending tasks</h2></div>
+            <button class="close" id="closePending" aria-label="Close pending tasks">×</button>
+        </div>
+        <p class="muted pending-intro">A quick look at what still needs your attention.</p>
+        <div class="task-list" id="pendingTasksList"></div>
+    </div>
+</div>
 
-            <!-- Search box -->
-            <div class="search">
+<!-- TOAST -->
+<div class="toast"
+     id="toast">
 
-                <span>⌕</span>
+    <span id="toastText"></span>
 
-                <input
-                    id="search"
-                    placeholder="Search by title, category or description..."
-                >
+    <button id="undoBtn"
+            style="display:none">
+        UNDO
+    </button>
 
-            </div>
+</div>
 
 
-            <!-- Sorting options -->
-            <select id="sortOption">
-
-                <option value="new">
-                    Newest
-                </option>
-
-                <option value="priority">
-                    Priority: High → Low
-                </option>
-
-                <option value="deadline">
-                    Deadline
-                </option>
-
-                <option value="title">
-                    Title A → Z
-                </option>
-
-            </select>
-
-
-            <!-- Undo -->
-            <button
-                class="tool"
-                id="undoBtn"
-            >
-                ↶ Undo
-            </button>
-
-
-            <!-- Queue processing -->
-            <button
-                class="tool"
-                id="queueBtn"
-            >
-                FIFO Process
-            </button>
-
-
-            <!-- Priority Queue processing -->
-            <button
-                class="tool"
-                id="priorityBtn"
-            >
-                Priority Process
-            </button>
-
-        </section>
-
-
-        <!-- ================= TASK LISTS ================= -->
-        <section class="workspace">
-
-
-            <!-- Pending tasks -->
-            <div class="panel task-panel">
-
-                <div class="section-head">
-
-                    <div>
-
-                        <div class="eyebrow">
-                            TASK LIST
-                        </div>
-
-                        <h2>
-                            Pending Tasks
-                            <span id="pendingLabel">0</span>
-                        </h2>
-
-                    </div>
-
-                    <!-- DSA concept used -->
-                    <span class="pill">
-                        Linked List
-                    </span>
-
-                </div>
-
-
-                <!-- JavaScript tasks ko yaha show karega -->
-                <div id="pendingList"></div>
-
-            </div>
-
-
-            <!-- Completed tasks -->
-            <div class="panel task-panel">
-
-                <div class="section-head">
-
-                    <div>
-
-                        <div class="eyebrow">
-                            DONE
-                        </div>
-
-                        <h2>
-                            Completed
-                            <span id="doneLabel">0</span>
-                        </h2>
-
-                    </div>
-
-                    <span class="pill green-pill">
-                        Completed
-                    </span>
-
-                </div>
-
-
-                <!-- Completed tasks yaha show honge -->
-                <div id="completedList"></div>
-
-            </div>
-
-        </section>
-
-
-        <!-- ================= DSA SECTION ================= -->
-        <section class="panel dsa-panel">
-
-            <div class="section-head">
-
-                <div>
-
-                    <div class="eyebrow">
-                        PBL / VIVA
-                    </div>
-
-                    <h2>
-                        Where C & C++ / DSA are used
-                    </h2>
-
-                </div>
-
-                <span class="pill">
-                    Easy to explain
-                </span>
-
-            </div>
-
-
-            <div class="dsa-grid">
-
-                <!-- Linked List -->
-                <article>
-                    <b>01</b>
-
-                    <h3>Linked List</h3>
-
-                    <p>
-                        Flexible task storage with insertion and deletion.
-                    </p>
-
-                    <code>list&lt;Task&gt;</code>
-                </article>
-
-
-                <!-- Stack -->
-                <article>
-                    <b>02</b>
-
-                    <h3>Stack</h3>
-
-                    <p>
-                        Stores previous states for the Undo operation.
-                    </p>
-
-                    <code>stack&lt;vector&lt;Task&gt;&gt;</code>
-                </article>
-
-
-                <!-- Queue -->
-                <article>
-                    <b>03</b>
-
-                    <h3>Queue</h3>
-
-                    <p>
-                        Processes pending tasks in FIFO order.
-                    </p>
-
-                    <code>queue&lt;int&gt;</code>
-                </article>
-
-
-                <!-- Priority Queue -->
-                <article>
-                    <b>04</b>
-
-                    <h3>Priority Queue</h3>
-
-                    <p>
-                        Processes high-priority tasks first.
-                    </p>
-
-                    <code>priority_queue</code>
-                </article>
-
-
-                <!-- Searching -->
-                <article>
-                    <b>05</b>
-
-                    <h3>Searching</h3>
-
-                    <p>
-                        Finds tasks using title, category or description.
-                    </p>
-
-                    <code>linear search</code>
-                </article>
-
-
-                <!-- Sorting -->
-                <article>
-                    <b>06</b>
-
-                    <h3>Sorting</h3>
-
-                    <p>
-                        Orders tasks by priority, deadline or title.
-                    </p>
-
-                    <code>sort()</code>
-                </article>
-
-
-                <!-- Map -->
-                <article>
-                    <b>07</b>
-
-                    <h3>Map / Lookup</h3>
-
-                    <p>
-                        Maintains ID-based task lookup.
-                    </p>
-
-                    <code>map&lt;int, Task&gt;</code>
-                </article>
-
-
-                <!-- File Handling -->
-                <article>
-                    <b>08</b>
-
-                    <h3>File Handling</h3>
-
-                    <p>
-                        Saves task records so data can persist.
-                    </p>
-
-                    <code>fstream</code>
-                </article>
-
-            </div>
-
-        </section>
-
-
-        <!-- ================= PROJECT WORKFLOW ================= -->
-        <section class="panel architecture">
-
-            <div class="section-head">
-
-                <div>
-
-                    <div class="eyebrow">
-                        SYSTEM WORKFLOW
-                    </div>
-
-                    <h2>
-                        How the project works
-                    </h2>
-
-                </div>
-
-            </div>
-
-
-            <!-- Step-by-step project flow -->
-            <div class="flow">
-
-
-                <!-- Step 1 -->
-                <div>
-                    <b>1</b>
-                    <span>User Input</span>
-                    <small>Task details</small>
-                </div>
-
-
-                <i>→</i>
-
-
-                <!-- Step 2 -->
-                <div>
-                    <b>2</b>
-                    <span>Processing</span>
-                    <small>Search / Sort / DSA</small>
-                </div>
-
-
-                <i>→</i>
-
-
-                <!-- Step 3 -->
-                <div>
-                    <b>3</b>
-                    <span>Core Logic</span>
-                    <small>Task Manager</small>
-                </div>
-
-
-                <i>→</i>
-
-
-                <!-- Step 4 -->
-                <div>
-                    <b>4</b>
-                    <span>Storage</span>
-                    <small>File handling</small>
-                </div>
-
-
-                <i>→</i>
-
-
-                <!-- Step 5 -->
-                <div>
-                    <b>5</b>
-                    <span>Output</span>
-                    <small>Organized tasks</small>
-                </div>
-
-            </div>
-
-        </section>
-
-    </main>
-
-
-    <!-- ================= FOOTER ================= -->
-    <footer>
-        Smart To-Do List & Task Management System
-        • PBL Phase II
-        • Team DSCPP-III-2026-T302
-    </footer>
-
-
-    <!-- JavaScript file -->
-    <script src="app.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+<script src="script.js"></script>
+<script src="localdb.js"></script>
+<script src="auth.js"></script>
 
 </body>
 </html>
