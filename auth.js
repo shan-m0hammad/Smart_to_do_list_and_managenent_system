@@ -198,6 +198,10 @@
 
     } catch (err) {
 
+      // FIX: log the user out of memory so an empty task list can never be saved over their real data.
+      currentUser = null;
+      tasks = [];
+
       // Displays an error if task loading fails.
       msg('Could not load tasks: ' + err.message);
 
