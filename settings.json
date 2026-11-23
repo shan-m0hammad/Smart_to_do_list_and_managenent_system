@@ -1,70 +1,103 @@
-    "-Wnull-dereference"  // Warns about possible null-pointer dereferences.
+
+{
+  // Uses GCC as the C compiler.
+  "C_Cpp_Runner.cCompilerPath": "gcc",
+
+  // Uses G++ as the C++ compiler.
+  "C_Cpp_Runner.cppCompilerPath": "g++",
+
+  // Uses GDB as the debugger.
+  "C_Cpp_Runner.debuggerPath": "gdb",
+
+  // C language standard is not specified.
+  "C_Cpp_Runner.cStandard": "",
+
+  // C++ language standard is not specified.
+  "C_Cpp_Runner.cppStandard": "",
+
+  // Path to Visual Studio compiler environment setup file.
+  "C_Cpp_Runner.msvcBatchPath": "C:/Program Files/Microsoft Visual Studio/VR_NR/Community/VC/Auxiliary/Build/vcvarsall.bat",
+
+  // Uses GCC/G++ instead of Microsoft Visual C++ compiler.
+  "C_Cpp_Runner.useMsvc": false,
+
+  // Warning flags used by GCC and G++.
+  "C_Cpp_Runner.warnings": [
+    "-Wall",
+    "-Wextra",
+    "-Wpedantic",
+    "-Wshadow",
+    "-Wformat=2",
+    "-Wcast-align",
+    "-Wconversion",
+    "-Wsign-conversion",
+    "-Wnull-dereference"
   ],
 
-  // Warning flags used when the Microsoft Visual C++ compiler is selected.
+  // Warning flags used by Microsoft Visual C++ compiler.
   "C_Cpp_Runner.msvcWarnings": [
-    "/W4",        // Enables a high warning level.
-    "/permissive-", // Enforces more standards-conforming C++ behavior.
-    "/w14242",    // Warns about a conversion that may lose data.
-    "/w14287",    // Warns about signed/unsigned comparison issues.
-    "/w14296",    // Warns about expressions that are always true or false.
-    "/w14311",    // Warns about pointer conversion issues.
-    "/w14826",    // Warns about sign conversions.
-    "/w44062",    // Warns about missing switch cases for an enum.
-    "/w44242",    // Warns about possible data loss in conversions.
-    "/w14905",    // Warns about wide-string conversion issues.
-    "/w14906",    // Warns about string conversion issues.
-    "/w14263",    // Warns about virtual functions that may not override a base function.
-    "/w44265",    // Warns about classes with virtual functions but non-virtual destructors.
-    "/w14928"     // Warns about possible truncation in conversions.
+    "/W4",
+    "/permissive-",
+    "/w14242",
+    "/w14287",
+    "/w14296",
+    "/w14311",
+    "/w14826",
+    "/w44062",
+    "/w44242",
+    "/w14905",
+    "/w14906",
+    "/w14263",
+    "/w44265",
+    "/w14928"
   ],
 
-  // Turns compiler warnings on.
+  // Enables compiler warnings.
   "C_Cpp_Runner.enableWarnings": true,
 
-  // Warnings are not treated as errors, so they do not automatically stop compilation.
+  // Warnings are not treated as errors.
   "C_Cpp_Runner.warningsAsError": false,
 
-  // Extra arguments passed to the compiler; currently none are configured.
+  // Additional compiler arguments.
   "C_Cpp_Runner.compilerArgs": [],
 
-  // Extra arguments passed to the linker; currently none are configured.
+  // Additional linker arguments.
   "C_Cpp_Runner.linkerArgs": [],
 
-  // Additional include directories for header-file lookup; currently none are configured.
+  // Additional header file search directories.
   "C_Cpp_Runner.includePaths": [],
 
-  // Patterns used to search for source and header files.
+  // Files and folders included in source file searching.
   "C_Cpp_Runner.includeSearch": [
-    "*",      // Searches files in the current folder.
-    "**/*"    // Searches files in all nested folders.
+    "*",
+    "**/*"
   ],
 
-  // Patterns excluded from source/header file searching.
+  // Files and folders excluded from source file searching.
   "C_Cpp_Runner.excludeSearch": [
-    "**/build",       // Excludes a folder named build.
-    "**/build/**",    // Excludes everything inside build folders.
-    "**/.*",          // Excludes hidden files.
-    "**/.*/**",       // Excludes contents of hidden folders.
-    "**/.vscode",     // Excludes the VS Code configuration folder.
-    "**/.vscode/**"   // Excludes files inside the VS Code configuration folder.
+    "**/build",
+    "**/build/**",
+    "**/.*",
+    "**/.*/**",
+    "**/.vscode",
+    "**/.vscode/**"
   ],
 
-  // AddressSanitizer is disabled. It can help detect memory-access errors.
+  // Disables AddressSanitizer.
   "C_Cpp_Runner.useAddressSanitizer": false,
 
-  // UndefinedBehaviorSanitizer is disabled. It can help detect undefined behavior.
+  // Disables UndefinedBehaviorSanitizer.
   "C_Cpp_Runner.useUndefinedSanitizer": false,
 
-  // LeakSanitizer is disabled. It can help detect memory leaks.
+  // Disables LeakSanitizer.
   "C_Cpp_Runner.useLeakSanitizer": false,
 
-  // Does not display the time taken to compile.
+  // Hides compilation time.
   "C_Cpp_Runner.showCompilationTime": false,
 
-  // Link-Time Optimization is disabled.
+  // Disables Link-Time Optimization.
   "C_Cpp_Runner.useLinkTimeOptimization": false,
 
-  // MSVC secure-function warnings are not suppressed.
+  // Does not suppress MSVC secure-function warnings.
   "C_Cpp_Runner.msvcSecureNoWarnings": false
 }
