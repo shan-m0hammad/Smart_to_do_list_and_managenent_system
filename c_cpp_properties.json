@@ -1,18 +1,38 @@
+
 {
+  // Stores all C/C++ configurations for the workspace.
   "configurations": [
     {
+      // Name of this configuration.
+      // It indicates Windows GCC compiler with 32-bit x86 IntelliSense mode.
       "name": "windows-gcc-x86",
+
+      // Specifies directories where IntelliSense searches for header files.
       "includePath": [
         "${workspaceFolder}/**"
       ],
+
+      // Specifies the location of the GCC compiler executable.
       "compilerPath": "C:/MinGW/bin/gcc.exe",
+
+      // Specifies the C language standard.
+      // ${default} means VS Code uses its default setting.
       "cStandard": "${default}",
+
+      // Specifies the C++ language standard.
+      // ${default} means VS Code uses its default setting.
       "cppStandard": "${default}",
+
+      // Specifies the IntelliSense mode for Windows GCC x86.
       "intelliSenseMode": "windows-gcc-x86",
+
+      // Additional arguments passed to the compiler for IntelliSense.
       "compilerArgs": [
         ""
       ]
     }
   ],
+
+  // Version of the configuration file format.
   "version": 4
 }
