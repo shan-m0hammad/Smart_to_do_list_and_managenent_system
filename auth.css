@@ -1,0 +1,20 @@
+#authOverlay{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;
+    background:rgba(15,23,42,.72);backdrop-filter:blur(6px);padding:16px}
+.auth-card{width:100%;max-width:380px;background:#fff;color:#1f2937;border-radius:18px;padding:28px;
+    box-shadow:0 20px 60px rgba(0,0,0,.35)}
+.auth-logo{font-size:24px;font-weight:700;text-align:center;margin-bottom:18px}
+.auth-logo span{color:#6c5ce7}
+.auth-tabs{display:flex;gap:6px;background:#eef0f6;border-radius:12px;padding:4px;margin-bottom:18px}
+.auth-tabs button{flex:1;border:0;background:transparent;padding:10px;border-radius:9px;font:inherit;
+    font-weight:600;cursor:pointer;color:#6b7280}
+.auth-tabs button.active{background:#fff;color:#1f2937;box-shadow:0 1px 4px rgba(0,0,0,.12)}
+#authForm{display:flex;flex-direction:column;gap:12px}
+#authForm input{padding:12px 14px;border:1px solid #d1d5db;border-radius:10px;font:inherit}
+#authForm input[hidden]{display:none}
+#authForm .primary-btn{width:100%;justify-content:center}
+.auth-msg{min-height:18px;font-size:13px;color:#dc2626;margin:0}
+.auth-msg.ok{color:#16a34a}
+.user-box{position:absolute;left:16px;right:16px;bottom:20px;padding:14px 4px 0;border-top:1px solid rgba(127,127,127,.25);font-size:13px}
+.user-box .user-name{font-weight:700}
+.user-box .user-email{opacity:.7;margin:2px 0 10px;overflow-wrap:anywhere}
+.user-box .secondary-btn{width:100%}
